@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="Factors.Tests.EmailFeature.A_InitalizeInterface" /><Add Test="Factors.Tests.EmailFeature.B_CreateEmailCredential" /><Add Test="Factors.Tests.EmailFeature.C_ListEmailAccounts" /></Playlist>
