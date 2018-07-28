@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Factors.Feature.EmailFactor\Factors.Feature.Email.csproj" />
+    <ProjectReference Include="..\Factors.Feature.Email\Factors.Feature.Email.csproj" />
   </ItemGroup>
 
 </Project>

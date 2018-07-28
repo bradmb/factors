@@ -164,8 +164,8 @@
       <Project>{860dd2ca-4f20-4cfb-80bf-6a46d0eb0d9a}</Project>
       <Name>Factors.Feature.Email.Smtp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Factors.Feature.EmailFactor\Factors.Feature.Email.csproj">
-      <Project>{d79a934b-9673-4345-8d0d-37e5c9956963}</Project>
+    <ProjectReference Include="..\Factors.Feature.Email\Factors.Feature.Email.csproj">
+      <Project>{7c061110-a40f-4202-ae01-6e94172ffb30}</Project>
       <Name>Factors.Feature.Email</Name>
     </ProjectReference>
     <ProjectReference Include="..\Factors.Interfaces\Factors.Interfaces.csproj">
