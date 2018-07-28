@@ -13,6 +13,11 @@ namespace Factors.Interfaces
         void InitializeDatabaseSchema();
 
         /// <summary>
+        /// Releases created resources
+        /// </summary>
+        void Dispose();
+
+        /// <summary>
         /// Verifies that the token passed for the specified user is correct,
         /// and also updates the associated credential in the database as verified
         /// (assuming the token is correct)

@@ -30,6 +30,11 @@ namespace Factors.Database.SqlServer
             throw new NotImplementedException();
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public void InitializeDatabaseSchema()
         {
             throw new NotImplementedException();

@@ -24,6 +24,7 @@ namespace Factors
 
         public static void Dispose()
         {
+            _instance._configuration.StorageDatabase.Dispose();
             _instance = null;
         }
     }

@@ -63,10 +63,21 @@ namespace Factors.Tests
         }
 
         [TestMethod]
-        public void ListEmailAccounts()
+        public void VerifyEmailAccountIsValidated()
         {
             var emailCredential = Factor.ForUser(_userAccount).CreateEmailCredential(_userEmailAddress);
-            var accounts = Factor.ForUser(_userAccount).ListAllAccountsFor(EmailProvider.FeatureType);
+            var verificationResult = Factor.ForUser(_userAccount).VerifyToken(EmailProvider.FeatureType, emailCredential.TokenDetails.VerificationToken);
+
+            var accounts = Factor.ForUser(_userAccount).ListVerifiedAccountsFor(EmailProvider.FeatureType);
+
+            Assert.IsTrue(accounts.Count() > 0);
+        }
+
+        [TestMethod]
+        public void VerifyEmailAccountIsNotValidated()
+        {
+            var emailCredential = Factor.ForUser(_userAccount).CreateEmailCredential(_userEmailAddress);
+            var accounts = Factor.ForUser(_userAccount).ListUnverifiedAccountsFor(EmailProvider.FeatureType);
 
             Assert.IsTrue(accounts.Count() > 0);
         }
