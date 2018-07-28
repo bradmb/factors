@@ -79,8 +79,20 @@ namespace Factors.Feature.Email
                 : instance._configuration.StorageDatabase.StoreToken(tokenDetails);
 
             //
-            // TODO: Logic for sending out verification token
+            // Send out the verification token to the user's email address
             //
+            var messageSendResult = runAsAsync
+                ? await SendTokenMessageAsync(emailAddress, newToken).ConfigureAwait(false)
+                : SendTokenMessage(emailAddress, newToken);
+
+            if (!messageSendResult.IsSuccess)
+            {
+                return new FactorCredentialCreationResult
+                {
+                    IsSuccess = false,
+                    Message = messageSendResult.Message
+                };
+            }
 
             return new FactorCredentialCreationResult
             {

@@ -160,6 +160,10 @@
       <Project>{1ced9708-6c60-4a10-8e1d-2e4d78080e17}</Project>
       <Name>Factors.Encryption.PlainText</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj">
+      <Project>{860dd2ca-4f20-4cfb-80bf-6a46d0eb0d9a}</Project>
+      <Name>Factors.Feature.Email.Smtp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Factors.Feature.EmailFactor\Factors.Feature.Email.csproj">
       <Project>{d79a934b-9673-4345-8d0d-37e5c9956963}</Project>
       <Name>Factors.Feature.Email</Name>

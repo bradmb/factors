@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors", "Factors\Factors.csproj", "{CBD13C57-929D-4CD4-96AD-B28D1623BC70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors", "Factors\Factors.csproj", "{CBD13C57-929D-4CD4-96AD-B28D1623BC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Database.SqlServer", "Factors.Database.SqlServer\Factors.Database.SqlServer.csproj", "{DFEDA11C-7353-4E33-AF65-37BF4B6D27C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Database.SqlServer", "Factors.Database.SqlServer\Factors.Database.SqlServer.csproj", "{DFEDA11C-7353-4E33-AF65-37BF4B6D27C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Encryption.PlainText", "Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj", "{1CED9708-6C60-4A10-8E1D-2E4D78080E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Encryption.PlainText", "Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj", "{1CED9708-6C60-4A10-8E1D-2E4D78080E17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Tests", "Factors.Tests\Factors.Tests.csproj", "{154A557A-346F-402F-8947-11A59FF237CA}"
 EndProject
@@ -20,17 +20,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EncryptionProviders", "Encr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatureProviders", "FeatureProviders", "{D35099F7-7BD0-4798-A765-F94CAD442239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email", "Factors.Feature.EmailFactor\Factors.Feature.Email.csproj", "{D79A934B-9673-4345-8D0D-37E5C9956963}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Feature.Email", "Factors.Feature.EmailFactor\Factors.Feature.Email.csproj", "{D79A934B-9673-4345-8D0D-37E5C9956963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Database.InMemory", "Factors.Database.InMemory\Factors.Database.InMemory.csproj", "{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Database.InMemory", "Factors.Database.InMemory\Factors.Database.InMemory.csproj", "{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Interfaces", "Factors.Interfaces\Factors.Interfaces.csproj", "{C103317D-BBB9-4523-BCA1-5B51AA558EA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Interfaces", "Factors.Interfaces\Factors.Interfaces.csproj", "{C103317D-BBB9-4523-BCA1-5B51AA558EA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Models", "Factors.Models\Factors.Models.csproj", "{58072D84-75A4-4CC9-A133-1D315366B210}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Models", "Factors.Models\Factors.Models.csproj", "{58072D84-75A4-4CC9-A133-1D315366B210}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TokenProviders", "TokenProviders", "{C1209634-9BD3-43AB-86DD-2AEFB07465CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Token.Number", "Factors.Token.Number\Factors.Token.Number.csproj", "{F851848D-CD5E-40A6-A679-40D65CB51FA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Token.Number", "Factors.Token.Number\Factors.Token.Number.csproj", "{F851848D-CD5E-40A6-A679-40D65CB51FA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email.Smtp", "Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj", "{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,10 @@ Global
 		{F851848D-CD5E-40A6-A679-40D65CB51FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F851848D-CD5E-40A6-A679-40D65CB51FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F851848D-CD5E-40A6-A679-40D65CB51FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +90,7 @@ Global
 		{D79A934B-9673-4345-8D0D-37E5C9956963} = {D35099F7-7BD0-4798-A765-F94CAD442239}
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E} = {A95367CA-C1D8-4DDE-8CA2-40027F4A2BE4}
 		{F851848D-CD5E-40A6-A679-40D65CB51FA5} = {C1209634-9BD3-43AB-86DD-2AEFB07465CD}
+		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A} = {D35099F7-7BD0-4798-A765-F94CAD442239}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4917070E-F983-4808-9530-C0D868C02567}

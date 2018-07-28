@@ -24,9 +24,7 @@ namespace Factors.Tests
             {
                 FromAddress = "factors@domain.tld",
                 FromName = "My Application",
-                HostName = "localhost",
-                Port = 25,
-                UseSSL = false,
+                MailProvider = new Feature.Email.Smtp.Provider("localhost", 25, false),
                 TokenExpirationTime = TimeSpan.FromMinutes(5)
             });
         }
