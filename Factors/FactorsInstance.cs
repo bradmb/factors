@@ -10,7 +10,7 @@ namespace Factors
 
         public FactorsInstance()
         {
-            throw new UnauthorizedAccessException("Please initialize FactorsCliet by calling Factors.Initialization.Initialize");
+            throw new UnauthorizedAccessException("Please initialize Factors by calling Factors.Initialization.Initialize");
         }
 
         internal FactorsInstance(FactorsConfiguration configuration)
