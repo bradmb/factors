@@ -3,10 +3,12 @@
 
 Lots to still do on this project, but here's what is built out so far:
 * In-memory database (mostly to assist with unit testing)
-* Email multi-factor authentication
 * Users can have more than one credential (example: three phone numbers, FIDO2 key, and a TOTP token)
 * Numerical multi-factor tokens
 * Modular so you only have to install the features you want
+
+In Progress:
+* Email multi-factor authentication
 
 To-do:
 * SqlServer support
