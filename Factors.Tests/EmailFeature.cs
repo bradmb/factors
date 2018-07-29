@@ -79,5 +79,14 @@ namespace Factors.Tests
 
             Assert.IsTrue(accounts.Count() > 0);
         }
+
+        [TestMethod]
+        public void GetErrorWhenCreatingDuplicateCredentials()
+        {
+            var emailCredential = Factor.ForUser(_userAccount).CreateEmailCredential(_userEmailAddress);
+            var emailCredentialTwo = Factor.ForUser(_userAccount).CreateEmailCredential(_userEmailAddress);
+
+            Assert.IsFalse(emailCredentialTwo.IsSuccess);
+        }
     }
 }

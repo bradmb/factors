@@ -38,6 +38,17 @@ namespace Factors.Feature.Email
         private static async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(this FactorsInstance instance, string emailAddress, bool runAsAsync)
         {
             //
+            // Sets up our return model on the event of a successful
+            // credential creation
+            //
+            var credentialResult = new FactorCredentialCreationResult
+            {
+                IsSuccess = true,
+                VerificationMessageSent = true,
+                Message = "Account registered as pending verification, validation token sent",
+            };
+
+            //
             // Attempts to parse the email address. Will throw an exception if
             // it fails to.
             //
@@ -53,9 +64,21 @@ namespace Factors.Feature.Email
                 CredentialKey = emailAddress
             };
 
-            var newCredential = runAsAsync 
-                ? await instance._configuration.StorageDatabase.CreateCredentialAsync(credentailDetails).ConfigureAwait(false)
-                : instance._configuration.StorageDatabase.CreateCredential(credentailDetails);
+            try
+            {
+                credentialResult.CredentailDetails = runAsAsync
+                    ? await instance._configuration.StorageDatabase.CreateCredentialAsync(credentailDetails).ConfigureAwait(false)
+                    : instance._configuration.StorageDatabase.CreateCredential(credentailDetails);
+            }
+            catch (Exception ex)
+            {
+                return new FactorCredentialCreationResult
+                {
+                    IsSuccess = false,
+                    VerificationMessageSent = false,
+                    Message = $"There was an issue when creating the credential: {ex.Message}"
+                };
+            }
 
             //
             // Generates a new token to be used to verify the credential
@@ -74,7 +97,7 @@ namespace Factors.Feature.Email
                 CredentialKey = emailAddress
             };
 
-            tokenDetails = runAsAsync
+            credentialResult.TokenDetails = runAsAsync
                 ? await instance._configuration.StorageDatabase.StoreTokenAsync(tokenDetails).ConfigureAwait(false)
                 : instance._configuration.StorageDatabase.StoreToken(tokenDetails);
 
@@ -94,14 +117,10 @@ namespace Factors.Feature.Email
                 };
             }
 
-            return new FactorCredentialCreationResult
-            {
-                IsSuccess = true,
-                VerificationMessageSent = true,
-                CredentailDetails = newCredential,
-                TokenDetails = tokenDetails,
-                Message = "Account registered as pending verification, validation token sent"
-            };
+            //
+            // And finally return our result
+            //
+            return credentialResult;
         }
     }
 }

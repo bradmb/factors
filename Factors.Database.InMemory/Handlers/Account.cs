@@ -22,6 +22,9 @@ namespace Factors.Database.InMemory
 
         private async Task<FactorCredential> CreateCredentialAsync(FactorCredential model, bool runAsAsync)
         {
+            //
+            // Fill out the basic model details
+            //
             model.Id = 0;
             model.CreatedDateUtc = DateTime.UtcNow;
             model.ModifiedDateUtc = DateTime.UtcNow;
@@ -29,6 +32,35 @@ namespace Factors.Database.InMemory
 
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
+                //
+                // Check to see if the credential already exists in the database
+                //
+                var hasExistingCredential = runAsAsync
+                    ? await db.ExistsAsync<FactorCredential>(fc =>
+                            fc.UserAccountId == model.UserAccountId
+                            && fc.CredentialType == model.CredentialType
+                            && fc.CredentialKey == model.CredentialKey
+                            && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
+                        )
+                        .ConfigureAwait(false)
+                    : db.Exists<FactorCredential>(fc =>
+                            fc.UserAccountId == model.UserAccountId
+                            && fc.CredentialType == model.CredentialType
+                            && fc.CredentialKey == model.CredentialKey
+                            && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
+                        );
+
+                //
+                // If it is an existing credential exit out
+                //
+                if (hasExistingCredential)
+                {
+                    throw new Exception("Credential already exists in database for specified user");
+                }
+
+                //
+                // If not, let's add it
+                //
                 var credentialId = runAsAsync
                     ? await db.InsertAsync(model).ConfigureAwait(false)
                     : db.Insert(model);
