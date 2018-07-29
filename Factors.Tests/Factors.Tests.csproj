@@ -160,6 +160,10 @@
       <Project>{1ced9708-6c60-4a10-8e1d-2e4d78080e17}</Project>
       <Name>Factors.Encryption.PlainText</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj">
+      <Project>{3899bbde-fe7c-4bfa-830b-917712bf99fe}</Project>
+      <Name>Factors.Feature.Email.NullRoute</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj">
       <Project>{860dd2ca-4f20-4cfb-80bf-6a46d0eb0d9a}</Project>
       <Name>Factors.Feature.Email.Smtp</Name>

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email.Smtp"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Feature.Email", "Factors.Feature.Email\Factors.Feature.Email.csproj", "{7C061110-A40F-4202-AE01-6E94172FFB30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email.NullRoute", "Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj", "{3899BBDE-FE7C-4BFA-830B-917712BF99FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{7C061110-A40F-4202-AE01-6E94172FFB30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C061110-A40F-4202-AE01-6E94172FFB30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C061110-A40F-4202-AE01-6E94172FFB30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{F851848D-CD5E-40A6-A679-40D65CB51FA5} = {C1209634-9BD3-43AB-86DD-2AEFB07465CD}
 		{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A} = {D35099F7-7BD0-4798-A765-F94CAD442239}
 		{7C061110-A40F-4202-AE01-6E94172FFB30} = {D35099F7-7BD0-4798-A765-F94CAD442239}
+		{3899BBDE-FE7C-4BFA-830B-917712BF99FE} = {D35099F7-7BD0-4798-A765-F94CAD442239}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4917070E-F983-4808-9530-C0D868C02567}

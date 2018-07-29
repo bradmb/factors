@@ -25,11 +25,11 @@ namespace Factors.Tests
                 StorageDatabase = new Database.InMemory.Provider(),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).InitializeEmailFactor(new EmailConfiguration
             {
                 FromAddress = _senderAddress,
                 FromName = _senderName,
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.NullRoute.Provider(),
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
         }
@@ -117,7 +117,7 @@ namespace Factors.Tests
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
             {
                 FromName = _senderName,
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.NullRoute.Provider(),
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
         }
@@ -136,7 +136,7 @@ namespace Factors.Tests
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
             {
                 FromAddress = _senderAddress,
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.NullRoute.Provider(),
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
         }
@@ -175,7 +175,7 @@ namespace Factors.Tests
             {
                 FromName = _senderName,
                 FromAddress = _senderAddress,
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false)
+                MailProvider = new Feature.Email.NullRoute.Provider()
             });
         }
 
@@ -194,7 +194,7 @@ namespace Factors.Tests
             {
                 FromName = _senderName,
                 FromAddress = _senderAddress,
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.NullRoute.Provider(),
                 TokenExpirationTime = TimeSpan.FromMinutes(-_tokenExpirationTime)
             });
         }
