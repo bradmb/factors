@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Database.SqlServer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Encryption.PlainText", "Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj", "{1CED9708-6C60-4A10-8E1D-2E4D78080E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Tests", "Factors.Tests\Factors.Tests.csproj", "{154A557A-346F-402F-8947-11A59FF237CA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StorageProviders", "StorageProviders", "{A95367CA-C1D8-4DDE-8CA2-40027F4A2BE4}"
 	ProjectSection(SolutionItems) = preProject
 		Factors.Feature.EmailFactor\EmailProvider.cs = Factors.Feature.EmailFactor\EmailProvider.cs
@@ -28,11 +26,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TokenProviders", "TokenProv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Token.Number", "Factors.Token.Number\Factors.Token.Number.csproj", "{F851848D-CD5E-40A6-A679-40D65CB51FA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email.Smtp", "Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj", "{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Feature.Email.Smtp", "Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj", "{860DD2CA-4F20-4CFB-80BF-6A46D0EB0D9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Feature.Email", "Factors.Feature.Email\Factors.Feature.Email.csproj", "{7C061110-A40F-4202-AE01-6E94172FFB30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Feature.Email.NullRoute", "Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj", "{3899BBDE-FE7C-4BFA-830B-917712BF99FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Feature.Email.NullRoute", "Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj", "{3899BBDE-FE7C-4BFA-830B-917712BF99FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Tests", "Factors.Tests\Factors.Tests.csproj", "{B8239F28-291D-4F18-887E-5824854D106C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,10 +52,6 @@ Global
 		{1CED9708-6C60-4A10-8E1D-2E4D78080E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CED9708-6C60-4A10-8E1D-2E4D78080E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CED9708-6C60-4A10-8E1D-2E4D78080E17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{154A557A-346F-402F-8947-11A59FF237CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{154A557A-346F-402F-8947-11A59FF237CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{154A557A-346F-402F-8947-11A59FF237CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{154A557A-346F-402F-8947-11A59FF237CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,6 +76,10 @@ Global
 		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3899BBDE-FE7C-4BFA-830B-917712BF99FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8239F28-291D-4F18-887E-5824854D106C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8239F28-291D-4F18-887E-5824854D106C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8239F28-291D-4F18-887E-5824854D106C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8239F28-291D-4F18-887E-5824854D106C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
