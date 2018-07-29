@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Factors.Interfaces
+namespace Factors.Models.Interfaces
 {
     public interface IFactorsDatabase
     {

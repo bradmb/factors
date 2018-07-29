@@ -1,7 +1,8 @@
 ﻿namespace Factors.Interfaces
 {
-    public interface IFeatureTypeProvider
+    public class IFeatureType
     {
         string FeatureName { get; }
+        string FeatureGuid { get; }
     }
 }

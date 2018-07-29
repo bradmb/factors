@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using ServiceStack.OrmLite;
 using System.Collections.Generic;
@@ -38,14 +38,14 @@ namespace Factors.Database.InMemory
                 var hasExistingCredential = runAsAsync
                     ? await db.ExistsAsync<FactorCredential>(fc =>
                             fc.UserAccountId == model.UserAccountId
-                            && fc.CredentialType == model.CredentialType
+                            && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
                             && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
                         )
                         .ConfigureAwait(false)
                     : db.Exists<FactorCredential>(fc =>
                             fc.UserAccountId == model.UserAccountId
-                            && fc.CredentialType == model.CredentialType
+                            && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
                             && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
                         );
@@ -72,26 +72,26 @@ namespace Factors.Database.InMemory
         #endregion CREDENTIAL CREATION
 
         #region LIST CREDENTIAL
-        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, string credentialType, FactorCredentialVerificationType accountsToInclude)
+        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
-            return this.ListCredentialsForAsync(userAccountId, credentialType, accountsToInclude, false).GetAwaiter().GetResult();
+            return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, false).GetAwaiter().GetResult();
         }
 
-        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, string credentialType, FactorCredentialVerificationType accountsToInclude)
+        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
-            return this.ListCredentialsForAsync(userAccountId, credentialType, accountsToInclude, true);
+            return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, true);
         }
 
-        private async Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, string credentialType, FactorCredentialVerificationType accountsToInclude, bool runAsAsync)
+        private async Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
                 var query = db.From<FactorCredential>()
                     .Where(cred => cred.UserAccountId == userAccountId);
 
-                if (!string.IsNullOrWhiteSpace(credentialType))
+                if (featureType != null)
                 {
-                    query = query.Where(cred => cred.CredentialType == credentialType);
+                    query = query.Where(cred => cred.FeatureTypeGuid == featureType.FeatureGuid);
                 }
 
                 switch (accountsToInclude)

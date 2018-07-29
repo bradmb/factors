@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using ServiceStack.OrmLite;
 using System;
@@ -9,17 +9,17 @@ namespace Factors.Database.InMemory
     public partial class Provider : IFactorsDatabase
     {
         #region VERIFY TOKEN
-        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, string credentialType, string tokenValue)
+        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue)
         {
-            return VerifyTokenAsync(userAccountId, credentialType, tokenValue, true);
+            return VerifyTokenAsync(userAccountId, featureType, tokenValue, true);
         }
 
-        public FactorVerificationResult VerifyToken(string userAccountId, string credentialType, string tokenValue)
+        public FactorVerificationResult VerifyToken(string userAccountId, IFeatureType featureType, string tokenValue)
         {
-            return VerifyTokenAsync(userAccountId, credentialType, tokenValue, false).GetAwaiter().GetResult();
+            return VerifyTokenAsync(userAccountId, featureType, tokenValue, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, string credentialType, string tokenValue, bool runAsAsync)
+        private async Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
@@ -32,7 +32,7 @@ namespace Factors.Database.InMemory
                 var query = db.From<FactorGeneratedToken>()
                     .Where(cred => 
                         cred.UserAccountId == userAccountId
-                        && cred.CredentialType == credentialType
+                        && cred.CredentialType == featureType.FeatureGuid
                         && cred.ExpirationDateUtc >= currentDateUtc
                         && cred.VerificationToken == tokenValue
                     );

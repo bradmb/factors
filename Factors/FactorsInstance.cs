@@ -1,22 +1,22 @@
-﻿using Factors.Models;
+﻿using Factors.Models.Interfaces;
 using System;
 
 namespace Factors
 {
-    public partial class FactorsInstance
+    public partial class FactorsInstance : IFactorInstance
     {
-        public readonly FactorsConfiguration _configuration;
-        public string UserAccount { get; internal set; }
+        public IFactorConfiguration Configuration { get; set; }
+        public string UserAccount { get; set; }
 
         public FactorsInstance()
         {
             throw new UnauthorizedAccessException("Please initialize Factors by calling Factors.Initialization.Initialize");
         }
 
-        internal FactorsInstance(FactorsConfiguration configuration)
+        internal FactorsInstance(IFactorConfiguration configuration)
         {
-            _configuration = configuration;
-            _configuration.StorageDatabase.InitializeDatabaseSchema();
+            Configuration = configuration;
+            Configuration.StorageDatabase.InitializeDatabaseSchema();
         }
     }
 }

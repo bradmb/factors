@@ -1,13 +1,12 @@
-﻿using Factors.Models.UserAccount;
+﻿using Factors.Models.Interfaces;
+using Factors.Models.UserAccount;
 using System;
-using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Factors.Feature.Email
 {
-    public static partial class EmailProvider
+    public partial class EmailInstance : IFactorFeature
     {
         /// <summary>
         /// Creates a new email credential in the database and sends out
@@ -15,11 +14,11 @@ namespace Factors.Feature.Email
         /// the email address is legitimate
         /// </summary>
         /// <param name="instance"></param>
-        /// <param name="emailAddress"></param>
+        /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public static Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(this FactorsInstance instance, string emailAddress)
+        public Task<FactorCredentialCreationResult> CreateCredentialAsync(IFactorInstance instance, string credentialKey)
         {
-            return CreateEmailCredentialAsync(instance, emailAddress, true);
+            return CreateEmailCredentialAsync(instance, credentialKey, true);
         }
 
         /// <summary>
@@ -28,14 +27,14 @@ namespace Factors.Feature.Email
         /// the email address is legitimate
         /// </summary>
         /// <param name="instance"></param>
-        /// <param name="emailAddress"></param>
+        /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public static FactorCredentialCreationResult CreateEmailCredential(this FactorsInstance instance, string emailAddress)
+        public FactorCredentialCreationResult CreateCredential(IFactorInstance instance, string credentialKey)
         {
-            return CreateEmailCredentialAsync(instance, emailAddress, false).GetAwaiter().GetResult();
+            return CreateEmailCredentialAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        private static async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(this FactorsInstance instance, string emailAddress, bool runAsAsync)
+        private async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(IFactorInstance instance, string credentialKey, bool runAsAsync)
         {
             //
             // Sets up our return model on the event of a successful
@@ -52,7 +51,7 @@ namespace Factors.Feature.Email
             // Attempts to parse the email address. Will throw an exception if
             // it fails to.
             //
-            new MailAddress(emailAddress);
+            new MailAddress(credentialKey);
 
             //
             // Creates the new "pending verification" credential
@@ -60,15 +59,15 @@ namespace Factors.Feature.Email
             var credentailDetails = new FactorCredential
             {
                 UserAccountId = instance.UserAccount,
-                CredentialType = FeatureType.FeatureName,
-                CredentialKey = emailAddress
+                FeatureTypeGuid = _featureType.FeatureGuid,
+                CredentialKey = credentialKey
             };
 
             try
             {
                 credentialResult.CredentailDetails = runAsAsync
-                    ? await instance._configuration.StorageDatabase.CreateCredentialAsync(credentailDetails).ConfigureAwait(false)
-                    : instance._configuration.StorageDatabase.CreateCredential(credentailDetails);
+                    ? await instance.Configuration.StorageDatabase.CreateCredentialAsync(credentailDetails).ConfigureAwait(false)
+                    : instance.Configuration.StorageDatabase.CreateCredential(credentailDetails);
             }
             catch (Exception ex)
             {
@@ -83,7 +82,7 @@ namespace Factors.Feature.Email
             //
             // Generates a new token to be used to verify the credential
             //
-            var newToken = instance._configuration.TokenProvider.GenerateToken();
+            var newToken = instance.Configuration.TokenProvider.GenerateToken();
 
             //
             // Stores the new token in the database
@@ -92,21 +91,21 @@ namespace Factors.Feature.Email
             {
                 UserAccountId = instance.UserAccount,
                 VerificationToken = newToken,
-                CredentialType = FeatureType.FeatureName,
+                CredentialType = _featureType.FeatureGuid,
                 ExpirationDateUtc = DateTime.UtcNow.Add(_configuration.TokenExpirationTime),
-                CredentialKey = emailAddress
+                CredentialKey = credentialKey
             };
 
             credentialResult.TokenDetails = runAsAsync
-                ? await instance._configuration.StorageDatabase.StoreTokenAsync(tokenDetails).ConfigureAwait(false)
-                : instance._configuration.StorageDatabase.StoreToken(tokenDetails);
+                ? await instance.Configuration.StorageDatabase.StoreTokenAsync(tokenDetails).ConfigureAwait(false)
+                : instance.Configuration.StorageDatabase.StoreToken(tokenDetails);
 
             //
             // Send out the verification token to the user's email address
             //
             var messageSendResult = runAsAsync
-                ? await SendTokenMessageAsync(emailAddress, newToken).ConfigureAwait(false)
-                : SendTokenMessage(emailAddress, newToken);
+                ? await SendTokenMessageAsync(credentialKey, newToken).ConfigureAwait(false)
+                : SendTokenMessage(credentialKey, newToken);
 
             if (!messageSendResult.IsSuccess)
             {

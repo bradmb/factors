@@ -168,10 +168,6 @@
       <Project>{7c061110-a40f-4202-ae01-6e94172ffb30}</Project>
       <Name>Factors.Feature.Email</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Factors.Interfaces\Factors.Interfaces.csproj">
-      <Project>{C103317D-BBB9-4523-BCA1-5B51AA558EA3}</Project>
-      <Name>Factors.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Factors.Models\Factors.Models.csproj">
       <Project>{58072D84-75A4-4CC9-A133-1D315366B210}</Project>
       <Name>Factors.Models</Name>

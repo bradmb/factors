@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
     <ProjectReference Include="..\Factors\Factors.csproj" />
   </ItemGroup>
 

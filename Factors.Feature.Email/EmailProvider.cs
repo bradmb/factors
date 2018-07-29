@@ -4,15 +4,11 @@ namespace Factors.Feature.Email
 {
     public static partial class EmailProvider
     {
-        private static EmailConfiguration _configuration;
-
-        public static FeatureType FeatureType { get; private set; }
+        public static EmailInstance Instance;
 
         public static FactorsInstance InitializeEmailFactor(this FactorsInstance instance, EmailConfiguration configuration)
         {
-            _configuration = configuration;
-            FeatureType = new FeatureType();
-
+            Instance = new EmailInstance(instance, configuration);
             return instance;
         }
     }

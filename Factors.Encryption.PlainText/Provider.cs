@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 
 namespace Factors.Encryption.PlainText
 {

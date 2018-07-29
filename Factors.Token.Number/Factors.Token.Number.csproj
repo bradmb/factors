@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Factors.Interfaces\Factors.Interfaces.csproj" />
+    <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
   </ItemGroup>
 
 </Project>

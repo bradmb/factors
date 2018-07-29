@@ -12,7 +12,7 @@ namespace Factors.Models.UserAccount
 
         public DateTime ModifiedDateUtc { get; set; }
 
-        public string CredentialType { get; set; }
+        public string FeatureTypeGuid { get; set; }
 
         public string CredentialKey { get; set; }
 

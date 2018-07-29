@@ -22,8 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FeatureProviders", "Feature
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Database.InMemory", "Factors.Database.InMemory\Factors.Database.InMemory.csproj", "{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Interfaces", "Factors.Interfaces\Factors.Interfaces.csproj", "{C103317D-BBB9-4523-BCA1-5B51AA558EA3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Models", "Factors.Models\Factors.Models.csproj", "{58072D84-75A4-4CC9-A133-1D315366B210}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TokenProviders", "TokenProviders", "{C1209634-9BD3-43AB-86DD-2AEFB07465CD}"
@@ -60,10 +58,6 @@ Global
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC3FAC7-5C23-471F-BCCD-A805FF2D1D3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C103317D-BBB9-4523-BCA1-5B51AA558EA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C103317D-BBB9-4523-BCA1-5B51AA558EA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C103317D-BBB9-4523-BCA1-5B51AA558EA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C103317D-BBB9-4523-BCA1-5B51AA558EA3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{58072D84-75A4-4CC9-A133-1D315366B210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58072D84-75A4-4CC9-A133-1D315366B210}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58072D84-75A4-4CC9-A133-1D315366B210}.Release|Any CPU.ActiveCfg = Release|Any CPU

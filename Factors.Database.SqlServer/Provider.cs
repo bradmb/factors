@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using System;
 using System.Collections.Generic;
@@ -40,12 +40,12 @@ namespace Factors.Database.SqlServer
             throw new NotImplementedException();
         }
 
-        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, string credentialType, FactorCredentialVerificationType accountsToInclude)
+        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, string credentialType, FactorCredentialVerificationType accountsToInclude)
+        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
             throw new NotImplementedException();
         }
@@ -60,12 +60,12 @@ namespace Factors.Database.SqlServer
             throw new NotImplementedException();
         }
 
-        public FactorVerificationResult VerifyToken(string userAccountId, string credentialType, string tokenValue)
+        public FactorVerificationResult VerifyToken(string userAccountId, IFeatureType featureType, string tokenValue)
         {
             throw new NotImplementedException();
         }
 
-        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, string credentialType, string tokenValue)
+        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue)
         {
             throw new NotImplementedException();
         }

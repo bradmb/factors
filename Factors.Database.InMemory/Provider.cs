@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using ServiceStack.OrmLite;
 

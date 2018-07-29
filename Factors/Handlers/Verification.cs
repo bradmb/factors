@@ -1,4 +1,4 @@
-﻿using Factors.Interfaces;
+﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using System.Threading.Tasks;
 
@@ -14,9 +14,10 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public FactorVerificationResult VerifyToken(IFeatureTypeProvider feature, string tokenValue)
+        public FactorVerificationResult VerifyToken<tt>(string tokenValue) where tt : IFeatureType, new()
         {
-            return _configuration.StorageDatabase.VerifyToken(UserAccount, feature.FeatureName, tokenValue);
+            var featureType = new tt();
+            return Configuration.StorageDatabase.VerifyToken(UserAccount, featureType, tokenValue);
         }
 
         /// <summary>
@@ -27,9 +28,10 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public Task<FactorVerificationResult> VerifyTokenAsync(IFeatureTypeProvider feature, string tokenValue)
+        public Task<FactorVerificationResult> VerifyTokenAsync<tt>(string tokenValue) where tt : IFeatureType, new()
         {
-            return _configuration.StorageDatabase.VerifyTokenAsync(UserAccount, feature.FeatureName, tokenValue);
+            var featureType = new tt();
+            return Configuration.StorageDatabase.VerifyTokenAsync(UserAccount, featureType, tokenValue);
         }
     }
 }
