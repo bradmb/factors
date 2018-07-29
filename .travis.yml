@@ -8,4 +8,4 @@ script:
   - cd Factors
   - dotnet restore
   - dotnet build -c Release
-  - dotnet test
+  - dotnet test Factors.Tests/Factors.Tests.csproj
