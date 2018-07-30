@@ -8,13 +8,12 @@ namespace Factors.Feature.Email
         private EmailConfiguration _configuration;
         private IFeatureType _featureType;
 
-        public EmailInstance(FactorsInstance instance, EmailConfiguration configuration)
+        public EmailInstance(EmailConfiguration configuration)
         {
             _configuration = configuration;
             _featureType = new EmailFeatureType();
 
             this.ValidateConfiguration();
-            instance.RegisterFeature<EmailFeatureType>(this);
         }
     }
 }

@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Factors.Encryption.PlainText", "Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj", "{1CED9708-6C60-4A10-8E1D-2E4D78080E17}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StorageProviders", "StorageProviders", "{A95367CA-C1D8-4DDE-8CA2-40027F4A2BE4}"
-	ProjectSection(SolutionItems) = preProject
-		Factors.Feature.EmailFactor\EmailProvider.cs = Factors.Feature.EmailFactor\EmailProvider.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EncryptionProviders", "EncryptionProviders", "{D54BF6A6-9992-4800-8153-40F37963F245}"
 EndProject

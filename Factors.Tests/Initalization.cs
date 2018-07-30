@@ -12,7 +12,7 @@ namespace Factors.Tests
         [TestInitialize]
         public void Initalize()
         {
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
@@ -23,13 +23,13 @@ namespace Factors.Tests
         [TestCleanup()]
         public void Dispose()
         {
-            Factor.Dispose();
+            Factors.Dispose();
         }
 
         [TestMethod]
         public void VerifyInitalization()
         {
-            Assert.IsNotNull(Factor.ForUser(_userAccount));
+            Assert.IsNotNull(Factors.ForUser(_userAccount));
         }
     }
 }

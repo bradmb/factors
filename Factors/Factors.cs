@@ -1,10 +1,13 @@
 ﻿using Factors.Models;
+using Factors.Models.Exception;
+using Factors.Models.Interfaces;
 
 namespace Factors
 {
-    public class Factor
+    public class Factors
     {
-        private static FactorsInstance Instance;
+        internal static FactorsInstance Instance;
+        public static FactorsRegistration Registration;
 
         public static FactorsInstance ForUser(string userAccountId)
         {
@@ -16,10 +19,12 @@ namespace Factors
         /// Initalizes the FactorsClient instance
         /// </summary>
         /// <param name="configuration"></param>
-        public static FactorsInstance Initalize(FactorsConfiguration configuration)
+        public static FactorsRegistration Initalize(FactorsConfiguration configuration)
         {
+            Registration = new FactorsRegistration();
             Instance = new FactorsInstance(configuration);
-            return Instance;
+
+            return Registration;
         }
 
         public static void Dispose()

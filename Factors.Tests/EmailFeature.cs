@@ -23,12 +23,12 @@ namespace Factors.Tests
         [TestInitialize]
         public void Initalize()
         {
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
                 FromAddress = _senderAddress,
                 FromName = _senderName,
@@ -44,19 +44,19 @@ namespace Factors.Tests
         [TestCleanup()]
         public void Dispose()
         {
-            Factor.Dispose();
+            Factors.Dispose();
         }
 
         [TestMethod]
         public void VerifyIsInitalized()
         {
-            Assert.IsTrue(!String.IsNullOrWhiteSpace(Factor.ForUser(_userAccount).UserAccount));
+            Assert.IsTrue(!String.IsNullOrWhiteSpace(Factors.ForUser(_userAccount).UserAccount));
         }
 
         [TestMethod]
         public void CreateEmailCredential()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
 
             Assert.IsNotNull(emailCredential);
             Assert.IsTrue(emailCredential.IsSuccess);
@@ -66,8 +66,8 @@ namespace Factors.Tests
         [TestMethod]
         public void VerifyEmailToken()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factor.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
 
             Assert.IsTrue(verificationResult.Success);
         }
@@ -75,10 +75,10 @@ namespace Factors.Tests
         [TestMethod]
         public void VerifyEmailAccountIsValidated()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factor.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
 
-            var accounts = Factor.ForUser(_userAccount).ListVerifiedAccounts<EmailFeatureType>();
+            var accounts = Factors.ForUser(_userAccount).ListVerifiedAccounts<EmailFeatureType>();
 
             Assert.IsTrue(accounts.Count() > 0);
         }
@@ -86,8 +86,8 @@ namespace Factors.Tests
         [TestMethod]
         public void VerifyEmailAccountIsNotValidated()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var accounts = Factor.ForUser(_userAccount).ListUnverifiedAccounts<EmailFeatureType>();
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var accounts = Factors.ForUser(_userAccount).ListUnverifiedAccounts<EmailFeatureType>();
 
             Assert.IsTrue(accounts.Count() > 0);
         }
@@ -95,8 +95,8 @@ namespace Factors.Tests
         [TestMethod]
         public void TryAndPassInvalidNewAccountValidationCOde()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factor.ForUser(_userAccount).VerifyToken<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));
 
             Assert.IsFalse(verificationResult.Success);
         }
@@ -104,8 +104,8 @@ namespace Factors.Tests
         [TestMethod]
         public void GetErrorWhenCreatingDuplicateCredentials()
         {
-            var emailCredential = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var emailCredentialTwo = Factor.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var emailCredentialTwo = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
 
             Assert.IsFalse(emailCredentialTwo.IsSuccess);
         }
@@ -114,14 +114,14 @@ namespace Factors.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void GetExceptionWhenSetuMissingFromAddress()
         {
-            Factor.Dispose();
+            Factors.Dispose();
 
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
                 FromName = _senderName,
 #if DEBUG
@@ -137,14 +137,14 @@ namespace Factors.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void GetExceptionWhenSetupMissingFromName()
         {
-            Factor.Dispose();
+            Factors.Dispose();
 
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
                 FromAddress = _senderAddress,
 #if DEBUG
@@ -160,17 +160,17 @@ namespace Factors.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void GetExceptionWhenSetupMissingMailProvider()
         {
-            Factor.Dispose();
+            Factors.Dispose();
 
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
-                FromName = _senderName,
                 FromAddress = _senderAddress,
+                FromName = _senderName,
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
         }
@@ -179,40 +179,39 @@ namespace Factors.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void GetExceptionWhenSetupMissingTokenExpirationTime()
         {
-            Factor.Dispose();
+            Factors.Dispose();
 
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
-                FromName = _senderName,
                 FromAddress = _senderAddress,
 #if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false)
 #else
-                MailProvider = new Feature.Email.NullRoute.Provider(),
+                MailProvider = new Feature.Email.NullRoute.Provider()
 #endif
             });
-            }
+        }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void GetExceptionWhenSetupTokenExpirationNegativeNumber()
         {
-            Factor.Dispose();
+            Factors.Dispose();
 
-            Factor.Initalize(new Models.FactorsConfiguration
+            Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
-            }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
+            }).UseEmailFactor(new EmailConfiguration
             {
-                FromName = _senderName,
                 FromAddress = _senderAddress,
+                FromName = _senderName,
 #if DEBUG
                 MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
 #else
