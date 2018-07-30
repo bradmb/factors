@@ -4,7 +4,7 @@ using System;
 namespace Factors.Models.UserAccount
 {
     [Alias("Factors_VerificationToken")]
-    public class FactorsGeneratedToken
+    public class FactorsCredentialGeneratedToken
     {
         [PrimaryKey]
         public long Id { get; set; }

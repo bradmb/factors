@@ -1,6 +1,10 @@
 ﻿namespace Factors.Models.UserAccount
 {
-    public class FactorsCredentialCreationResult
+    /// <summary>
+    /// Result of when you are sending a verification message to
+    /// a pre-authorized two-factor verification credential
+    /// </summary>
+    public class FactorsAuthenticationCreationResult
     {
         public bool IsSuccess { get; set; }
 

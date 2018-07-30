@@ -29,7 +29,7 @@ namespace Factors.Database.OrmLite
                 // value is correct
                 //
                 var currentDateUtc = DateTime.UtcNow;
-                var query = db.From<FactorsGeneratedToken>()
+                var query = db.From<FactorsCredentialGeneratedToken>()
                     .Where(cred => 
                         cred.UserAccountId == userAccountId
                         && cred.FeatureTypeGuid == featureType.FeatureGuid
@@ -60,10 +60,10 @@ namespace Factors.Database.OrmLite
                 //
                 if (runAsAsync)
                 {
-                    await db.DeleteByIdAsync<FactorsGeneratedToken>(queryResult.Id).ConfigureAwait(false);
+                    await db.DeleteByIdAsync<FactorsCredentialGeneratedToken>(queryResult.Id).ConfigureAwait(false);
                 } else
                 {
-                    db.DeleteById<FactorsGeneratedToken>(queryResult.Id);
+                    db.DeleteById<FactorsCredentialGeneratedToken>(queryResult.Id);
                 }
 
                 //
@@ -103,17 +103,17 @@ namespace Factors.Database.OrmLite
         #endregion GET TOKEN
 
         #region STORE TOKEN
-        public Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model)
+        public Task<FactorsCredentialGeneratedToken> StoreTokenAsync(FactorsCredentialGeneratedToken model)
         {
             return StoreTokenAsync(model, true);
         }
 
-        public FactorsGeneratedToken StoreToken(FactorsGeneratedToken model)
+        public FactorsCredentialGeneratedToken StoreToken(FactorsCredentialGeneratedToken model)
         {
             return StoreTokenAsync(model, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model, bool runAsAsync)
+        private async Task<FactorsCredentialGeneratedToken> StoreTokenAsync(FactorsCredentialGeneratedToken model, bool runAsAsync)
         {
             model.Id = 0;
             model.CreatedDateUtc = DateTime.UtcNow;

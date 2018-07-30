@@ -67,7 +67,7 @@ namespace Factors.Tests
         public void VerifyEmailToken()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
 
             Assert.IsTrue(verificationResult.Success);
         }
@@ -76,7 +76,7 @@ namespace Factors.Tests
         public void VerifyEmailAccountIsValidated()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
 
             var accounts = Factors.ForUser(_userAccount).ListVerifiedAccounts<EmailFeatureType>();
 
@@ -96,7 +96,7 @@ namespace Factors.Tests
         public void TryAndPassInvalidNewAccountValidationCOde()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));
+            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));
 
             Assert.IsFalse(verificationResult.Success);
         }

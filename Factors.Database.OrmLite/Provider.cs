@@ -18,7 +18,7 @@ namespace Factors.Database.OrmLite
             using (var db = _dbConnection.Open())
             {
                 db.CreateTableIfNotExists<FactorsCredential>();
-                db.CreateTableIfNotExists<FactorsGeneratedToken>();
+                db.CreateTableIfNotExists<FactorsCredentialGeneratedToken>();
             }
         }
 
@@ -27,7 +27,7 @@ namespace Factors.Database.OrmLite
             using (var db = _dbConnection.Open())
             {
                 db.DropTable<FactorsCredential>();
-                db.DropTable<FactorsGeneratedToken>();
+                db.DropTable<FactorsCredentialGeneratedToken>();
             }
         }
     }

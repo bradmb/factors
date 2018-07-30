@@ -14,7 +14,7 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public FactorsCredentialCreationVerificationResult VerifyToken<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
+        public FactorsCredentialCreationVerificationResult VerifyCredentialRegistration<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             return Configuration.StorageDatabase.VerifyToken(UserAccount, featureType, tokenValue);
@@ -28,7 +28,7 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
+        public Task<FactorsCredentialCreationVerificationResult> VerifyCredentialRegistrationAsync<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             return Configuration.StorageDatabase.VerifyTokenAsync(UserAccount, featureType, tokenValue);

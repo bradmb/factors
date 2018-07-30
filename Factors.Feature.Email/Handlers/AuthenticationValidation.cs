@@ -1,57 +1,37 @@
 ﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using System;
+using System.Collections.Generic;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Factors.Feature.Email
 {
     public partial class EmailProvider : IFactorsFeatureProvider
     {
-        /// <summary>
-        /// Creates a new email credential in the database and sends out
-        /// an email with a verification token which will be used to verify
-        /// the email address is legitimate
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <param name="credentialKey"></param>
-        /// <returns></returns>
-        public Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey)
+        public FactorsAuthenticationCreationResult SendCredentialValidation(IFactorsApplication instance, string credentialKey)
         {
-            return CreateEmailCredentialAsync(instance, credentialKey, true);
+            return this.SendCredentialValidationAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        /// <summary>
-        /// Creates a new email credential in the database and sends out
-        /// an email with a verification token which will be used to verify
-        /// the email address is legitimate
-        /// </summary>
-        /// <param name="instance"></param>
-        /// <param name="credentialKey"></param>
-        /// <returns></returns>
-        public FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey)
+        public Task<FactorsAuthenticationCreationResult> SendCredentialValidationAsync(IFactorsApplication instance, string credentialKey)
         {
-            return CreateEmailCredentialAsync(instance, credentialKey, false).GetAwaiter().GetResult();
+            return this.SendCredentialValidationAsync(instance, credentialKey, true);
         }
 
-        private async Task<FactorsCredentialCreationResult> CreateEmailCredentialAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
+        private async Task<FactorsAuthenticationCreationResult> SendCredentialValidationAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
         {
             //
             // Sets up our return model on the event of a successful
             // credential creation
             //
-            var credentialResult = new FactorsCredentialCreationResult
+            var credentialResult = new FactorsAuthenticationCreationResult
             {
                 IsSuccess = true,
                 VerificationMessageSent = true,
-                Message = "Account registered as pending verification, validation token sent",
+                Message = "Validation token sent to credential",
             };
-
-            //
-            // Attempts to parse the email address. Will throw an exception if
-            // it fails to.
-            //
-            new MailAddress(credentialKey);
 
             //
             // Creates the new "pending verification" credential
@@ -71,7 +51,7 @@ namespace Factors.Feature.Email
             }
             catch (Exception ex)
             {
-                return new FactorsCredentialCreationResult
+                return new FactorsAuthenticationCreationResult
                 {
                     IsSuccess = false,
                     VerificationMessageSent = false,
@@ -109,7 +89,7 @@ namespace Factors.Feature.Email
 
             if (!messageSendResult.IsSuccess)
             {
-                return new FactorsCredentialCreationResult
+                return new FactorsAuthenticationCreationResult
                 {
                     IsSuccess = false,
                     Message = messageSendResult.Message

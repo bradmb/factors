@@ -45,7 +45,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        FactorsGeneratedToken StoreToken(FactorsGeneratedToken model);
+        FactorsCredentialGeneratedToken StoreToken(FactorsCredentialGeneratedToken model);
 
         /// <summary>
         /// Stores a two-factor token in the database. Tokens are used
@@ -53,7 +53,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model);
+        Task<FactorsCredentialGeneratedToken> StoreTokenAsync(FactorsCredentialGeneratedToken model);
 
         /// <summary>
         /// Creates a new credential for a user in the database. Will be created as a
