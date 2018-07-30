@@ -26,7 +26,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        FactorVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
+        FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
 
         /// <summary>
         /// Verifies that the token passed for the specified user is correct,
@@ -37,7 +37,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
+        Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
 
         /// <summary>
         /// Stores a two-factor token in the database. Tokens are used
@@ -45,7 +45,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        FactorGeneratedToken StoreToken(FactorGeneratedToken model);
+        FactorsGeneratedToken StoreToken(FactorsGeneratedToken model);
 
         /// <summary>
         /// Stores a two-factor token in the database. Tokens are used
@@ -53,7 +53,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<FactorGeneratedToken> StoreTokenAsync(FactorGeneratedToken model);
+        Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model);
 
         /// <summary>
         /// Creates a new credential for a user in the database. Will be created as a
@@ -61,7 +61,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        FactorCredential CreateCredential(FactorCredential model);
+        FactorsCredential CreateCredential(FactorsCredential model);
 
         /// <summary>
         /// Creates a new credential for a user in the database. Will be created as a
@@ -69,7 +69,7 @@ namespace Factors.Models.Interfaces
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<FactorCredential> CreateCredentialAsync(FactorCredential model);
+        Task<FactorsCredential> CreateCredentialAsync(FactorsCredential model);
 
         /// <summary>
         /// Lists all factor credentials for the specified User Account ID
@@ -77,7 +77,7 @@ namespace Factors.Models.Interfaces
         /// <param name="userAccountId"></param>
         /// <param name="excludePendingVerification">If <c>false</c>, will include any credential pending approval</param>
         /// <returns></returns>
-        IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
+        IEnumerable<FactorsCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorsCredentialListQueryType accountsToInclude);
 
         /// <summary>
         /// Lists all factor credentials for the specified User Account ID
@@ -85,6 +85,6 @@ namespace Factors.Models.Interfaces
         /// <param name="userAccountId"></param>
         /// <param name="excludePendingVerification">If <c>false</c>, will include any credential pending approval</param>
         /// <returns></returns>
-        Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
+        Task<IEnumerable<FactorsCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorsCredentialListQueryType accountsToInclude);
     }
 }

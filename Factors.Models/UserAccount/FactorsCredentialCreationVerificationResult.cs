@@ -1,6 +1,6 @@
 ﻿namespace Factors.Models.UserAccount
 {
-    public class FactorVerificationResult
+    public class FactorsCredentialCreationVerificationResult
     {
         public bool Success { get; set; }
 

@@ -10,17 +10,17 @@ namespace Factors.Database.OrmLite
     public partial class Provider : IFactorsDatabaseProvider
     {
         #region CREDENTIAL CREATION
-        public FactorCredential CreateCredential(FactorCredential model)
+        public FactorsCredential CreateCredential(FactorsCredential model)
         {
             return this.CreateCredentialAsync(model, false).GetAwaiter().GetResult();
         }
 
-        public Task<FactorCredential> CreateCredentialAsync(FactorCredential model)
+        public Task<FactorsCredential> CreateCredentialAsync(FactorsCredential model)
         {
             return this.CreateCredentialAsync(model, true);
         }
 
-        private async Task<FactorCredential> CreateCredentialAsync(FactorCredential model, bool runAsAsync)
+        private async Task<FactorsCredential> CreateCredentialAsync(FactorsCredential model, bool runAsAsync)
         {
             //
             // Fill out the basic model details
@@ -36,13 +36,13 @@ namespace Factors.Database.OrmLite
                 // Check to see if the credential already exists in the database
                 //
                 var hasExistingCredential = runAsAsync
-                    ? await db.ExistsAsync<FactorCredential>(fc =>
+                    ? await db.ExistsAsync<FactorsCredential>(fc =>
                             fc.UserAccountId == model.UserAccountId
                             && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
                         )
                         .ConfigureAwait(false)
-                    : db.Exists<FactorCredential>(fc =>
+                    : db.Exists<FactorsCredential>(fc =>
                             fc.UserAccountId == model.UserAccountId
                             && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
@@ -70,21 +70,21 @@ namespace Factors.Database.OrmLite
         #endregion CREDENTIAL CREATION
 
         #region LIST CREDENTIAL
-        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
+        public IEnumerable<FactorsCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorsCredentialListQueryType accountsToInclude)
         {
             return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, false).GetAwaiter().GetResult();
         }
 
-        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
+        public Task<IEnumerable<FactorsCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorsCredentialListQueryType accountsToInclude)
         {
             return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, true);
         }
 
-        private async Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude, bool runAsAsync)
+        private async Task<IEnumerable<FactorsCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorsCredentialListQueryType accountsToInclude, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
-                var query = db.From<FactorCredential>()
+                var query = db.From<FactorsCredential>()
                     .Where(cred => cred.UserAccountId == userAccountId);
 
                 if (featureType != null)
@@ -94,10 +94,10 @@ namespace Factors.Database.OrmLite
 
                 switch (accountsToInclude)
                 {
-                    case FactorCredentialVerificationType.UnverifiedAccounts:
+                    case FactorsCredentialListQueryType.UnverifiedAccounts:
                         query = query.Where(cred => cred.CredentialIsValidated == false);
                         break;
-                    case FactorCredentialVerificationType.VerifiedAccounts:
+                    case FactorsCredentialListQueryType.VerifiedAccounts:
                         query = query.Where(cred => cred.CredentialIsValidated == true);
                         break;
                 }

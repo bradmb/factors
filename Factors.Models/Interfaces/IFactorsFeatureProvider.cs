@@ -5,8 +5,10 @@ namespace Factors.Models.Interfaces
 {
     public interface IFactorsFeatureProvider
     {
-        Task<FactorCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey);
+        Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey);
 
-        FactorCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey);
+        FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey);
+
+
     }
 }

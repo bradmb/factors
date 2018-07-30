@@ -7,70 +7,70 @@ namespace Factors
 {
     public partial class FactorsApplication
     {
-        public IEnumerable<FactorCredential> ListVerifiedAccounts<tt>() where tt : IFactorsFeatureType, new()
+        public IEnumerable<FactorsCredential> ListVerifiedAccounts<tt>() where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorCredentialVerificationType.VerifiedAccounts);
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorsCredentialListQueryType.VerifiedAccounts);
         }
 
-        public IEnumerable<FactorCredential> ListVerifiedAccounts()
+        public IEnumerable<FactorsCredential> ListVerifiedAccounts()
         {
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorCredentialVerificationType.VerifiedAccounts);
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorsCredentialListQueryType.VerifiedAccounts);
         }
 
-        public Task<IEnumerable<FactorCredential>> ListVerifiedAccountAsync<tt>() where tt : IFactorsFeatureType, new()
-        {
-            var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorCredentialVerificationType.VerifiedAccounts);
-        }
-
-        public Task<IEnumerable<FactorCredential>> ListVerifiedAccountAsync()
-        {
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorCredentialVerificationType.VerifiedAccounts);
-        }
-
-        public IEnumerable<FactorCredential> ListUnverifiedAccounts<tt>() where tt : IFactorsFeatureType, new()
+        public Task<IEnumerable<FactorsCredential>> ListVerifiedAccountAsync<tt>() where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorCredentialVerificationType.UnverifiedAccounts);
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorsCredentialListQueryType.VerifiedAccounts);
         }
 
-        public IEnumerable<FactorCredential> ListUnverifiedAccounts()
+        public Task<IEnumerable<FactorsCredential>> ListVerifiedAccountAsync()
         {
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorCredentialVerificationType.UnverifiedAccounts);
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorsCredentialListQueryType.VerifiedAccounts);
         }
 
-        public Task<IEnumerable<FactorCredential>> ListUnverifiedAccountsAsync<tt>() where tt : IFactorsFeatureType, new()
-        {
-            var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorCredentialVerificationType.UnverifiedAccounts);
-        }
-
-        public Task<IEnumerable<FactorCredential>> ListUnverifiedAccountsAsync()
-        {
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorCredentialVerificationType.UnverifiedAccounts);
-        }
-
-        public IEnumerable<FactorCredential> ListAllAccounts<tt>() where tt : IFactorsFeatureType, new()
+        public IEnumerable<FactorsCredential> ListUnverifiedAccounts<tt>() where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorCredentialVerificationType.AllAccount);
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorsCredentialListQueryType.UnverifiedAccounts);
         }
 
-        public IEnumerable<FactorCredential> ListAllAccounts()
+        public IEnumerable<FactorsCredential> ListUnverifiedAccounts()
         {
-            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorCredentialVerificationType.AllAccount);
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorsCredentialListQueryType.UnverifiedAccounts);
         }
 
-        public Task<IEnumerable<FactorCredential>> ListAllAccountsAsync<tt>() where tt : IFactorsFeatureType, new()
+        public Task<IEnumerable<FactorsCredential>> ListUnverifiedAccountsAsync<tt>() where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorCredentialVerificationType.AllAccount);
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorsCredentialListQueryType.UnverifiedAccounts);
         }
 
-        public Task<IEnumerable<FactorCredential>> ListAllAccountsAsync()
+        public Task<IEnumerable<FactorsCredential>> ListUnverifiedAccountsAsync()
         {
-            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorCredentialVerificationType.AllAccount);
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorsCredentialListQueryType.UnverifiedAccounts);
+        }
+
+        public IEnumerable<FactorsCredential> ListAllAccounts<tt>() where tt : IFactorsFeatureType, new()
+        {
+            var featureType = new tt();
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, featureType, FactorsCredentialListQueryType.AllAccount);
+        }
+
+        public IEnumerable<FactorsCredential> ListAllAccounts()
+        {
+            return Configuration.StorageDatabase.ListCredentialsFor(UserAccount, null, FactorsCredentialListQueryType.AllAccount);
+        }
+
+        public Task<IEnumerable<FactorsCredential>> ListAllAccountsAsync<tt>() where tt : IFactorsFeatureType, new()
+        {
+            var featureType = new tt();
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, featureType, FactorsCredentialListQueryType.AllAccount);
+        }
+
+        public Task<IEnumerable<FactorsCredential>> ListAllAccountsAsync()
+        {
+            return Configuration.StorageDatabase.ListCredentialsForAsync(UserAccount, null, FactorsCredentialListQueryType.AllAccount);
         }
     }
 }

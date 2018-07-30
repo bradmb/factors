@@ -16,7 +16,7 @@ namespace Factors.Feature.Email
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey)
+        public Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey)
         {
             return CreateEmailCredentialAsync(instance, credentialKey, true);
         }
@@ -29,18 +29,18 @@ namespace Factors.Feature.Email
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey)
+        public FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey)
         {
             return CreateEmailCredentialAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
+        private async Task<FactorsCredentialCreationResult> CreateEmailCredentialAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
         {
             //
             // Sets up our return model on the event of a successful
             // credential creation
             //
-            var credentialResult = new FactorCredentialCreationResult
+            var credentialResult = new FactorsCredentialCreationResult
             {
                 IsSuccess = true,
                 VerificationMessageSent = true,
@@ -56,7 +56,7 @@ namespace Factors.Feature.Email
             //
             // Creates the new "pending verification" credential
             //
-            var credentailDetails = new FactorCredential
+            var credentailDetails = new FactorsCredential
             {
                 UserAccountId = instance.UserAccount,
                 FeatureTypeGuid = _featureType.FeatureGuid,
@@ -71,7 +71,7 @@ namespace Factors.Feature.Email
             }
             catch (Exception ex)
             {
-                return new FactorCredentialCreationResult
+                return new FactorsCredentialCreationResult
                 {
                     IsSuccess = false,
                     VerificationMessageSent = false,
@@ -87,7 +87,7 @@ namespace Factors.Feature.Email
             //
             // Stores the new token in the database
             //
-            var tokenDetails = new FactorGeneratedToken
+            var tokenDetails = new FactorsGeneratedToken
             {
                 UserAccountId = instance.UserAccount,
                 VerificationToken = newToken,
@@ -109,7 +109,7 @@ namespace Factors.Feature.Email
 
             if (!messageSendResult.IsSuccess)
             {
-                return new FactorCredentialCreationResult
+                return new FactorsCredentialCreationResult
                 {
                     IsSuccess = false,
                     Message = messageSendResult.Message

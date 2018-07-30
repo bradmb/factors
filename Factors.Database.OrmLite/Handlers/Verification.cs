@@ -9,17 +9,17 @@ namespace Factors.Database.OrmLite
     public partial class Provider : IFactorsDatabaseProvider
     {
         #region VERIFY TOKEN
-        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
+        public Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
         {
             return VerifyTokenAsync(userAccountId, featureType, tokenValue, true);
         }
 
-        public FactorVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
+        public FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
         {
             return VerifyTokenAsync(userAccountId, featureType, tokenValue, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue, bool runAsAsync)
+        private async Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
@@ -29,7 +29,7 @@ namespace Factors.Database.OrmLite
                 // value is correct
                 //
                 var currentDateUtc = DateTime.UtcNow;
-                var query = db.From<FactorGeneratedToken>()
+                var query = db.From<FactorsGeneratedToken>()
                     .Where(cred => 
                         cred.UserAccountId == userAccountId
                         && cred.FeatureTypeGuid == featureType.FeatureGuid
@@ -47,7 +47,7 @@ namespace Factors.Database.OrmLite
                 //
                 if (queryResult == null)
                 {
-                    return new FactorVerificationResult
+                    return new FactorsCredentialCreationVerificationResult
                     {
                         Success = false,
                         Message = "Unable to verify token"
@@ -60,10 +60,10 @@ namespace Factors.Database.OrmLite
                 //
                 if (runAsAsync)
                 {
-                    await db.DeleteByIdAsync<FactorGeneratedToken>(queryResult.Id).ConfigureAwait(false);
+                    await db.DeleteByIdAsync<FactorsGeneratedToken>(queryResult.Id).ConfigureAwait(false);
                 } else
                 {
-                    db.DeleteById<FactorGeneratedToken>(queryResult.Id);
+                    db.DeleteById<FactorsGeneratedToken>(queryResult.Id);
                 }
 
                 //
@@ -71,7 +71,7 @@ namespace Factors.Database.OrmLite
                 // that is currently marked as "unverified" and change that flag
                 // to "verified"
                 //
-                var userCredentialQuery = db.From<FactorCredential>()
+                var userCredentialQuery = db.From<FactorsCredential>()
                     .Where(cred => cred.UserAccountId == userAccountId
                     && cred.CredentialKey == queryResult.CredentialKey
                     && cred.CredentialIsValidated == false);
@@ -93,7 +93,7 @@ namespace Factors.Database.OrmLite
                 //
                 // And we're done!
                 //
-                return new FactorVerificationResult
+                return new FactorsCredentialCreationVerificationResult
                 {
                     Success = true,
                     Message = "Token verified"
@@ -103,17 +103,17 @@ namespace Factors.Database.OrmLite
         #endregion GET TOKEN
 
         #region STORE TOKEN
-        public Task<FactorGeneratedToken> StoreTokenAsync(FactorGeneratedToken model)
+        public Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model)
         {
             return StoreTokenAsync(model, true);
         }
 
-        public FactorGeneratedToken StoreToken(FactorGeneratedToken model)
+        public FactorsGeneratedToken StoreToken(FactorsGeneratedToken model)
         {
             return StoreTokenAsync(model, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorGeneratedToken> StoreTokenAsync(FactorGeneratedToken model, bool runAsAsync)
+        private async Task<FactorsGeneratedToken> StoreTokenAsync(FactorsGeneratedToken model, bool runAsAsync)
         {
             model.Id = 0;
             model.CreatedDateUtc = DateTime.UtcNow;

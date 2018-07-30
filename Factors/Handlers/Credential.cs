@@ -17,7 +17,7 @@ namespace Factors
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        public Task<FactorsCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
@@ -33,7 +33,7 @@ namespace Factors
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorCredentialCreationResult CreateCredential<tt>(string credentialKey) where tt : IFactorsFeatureType, new ()
+        public FactorsCredentialCreationResult CreateCredential<tt>(string credentialKey) where tt : IFactorsFeatureType, new ()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];

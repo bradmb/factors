@@ -1,6 +1,6 @@
 ﻿namespace Factors.Models.UserAccount
 {
-    public enum FactorCredentialVerificationType
+    public enum FactorsCredentialListQueryType
     {
         VerifiedAccounts,
         UnverifiedAccounts,
