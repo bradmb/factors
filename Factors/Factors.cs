@@ -6,10 +6,10 @@ namespace Factors
 {
     public class Factors
     {
-        internal static FactorsInstance Instance;
+        internal static FactorsApplication Instance;
         public static FactorsRegistration Registration;
 
-        public static FactorsInstance ForUser(string userAccountId)
+        public static FactorsApplication ForUser(string userAccountId)
         {
             Instance.UserAccount = userAccountId;
             return Instance;
@@ -22,7 +22,7 @@ namespace Factors
         public static FactorsRegistration Initalize(FactorsConfiguration configuration)
         {
             Registration = new FactorsRegistration();
-            Instance = new FactorsInstance(configuration);
+            Instance = new FactorsApplication(configuration);
 
             return Registration;
         }

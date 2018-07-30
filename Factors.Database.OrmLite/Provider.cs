@@ -4,7 +4,7 @@ using ServiceStack.OrmLite;
 
 namespace Factors.Database.OrmLite
 {
-    public partial class Provider : IFactorsDatabase
+    public partial class Provider : IFactorsDatabaseProvider
     {
         private OrmLiteConnectionFactory _dbConnection;
 

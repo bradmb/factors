@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace Factors.Feature.Email
 {
-    public partial class EmailInstance : IFactorFeature
+    public partial class EmailProvider : IFactorsFeatureProvider
     {
         /// <summary>
         /// Verifies that the initial configuration is correct

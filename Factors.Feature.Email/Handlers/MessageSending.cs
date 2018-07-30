@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Factors.Feature.Email
 {
-    public partial class EmailInstance : IFactorFeature
+    public partial class EmailProvider : IFactorsFeatureProvider
     {
         private EmailSendResult SendTokenMessage(string emailAddress, string token)
         {

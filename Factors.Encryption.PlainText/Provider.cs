@@ -2,7 +2,7 @@
 
 namespace Factors.Encryption.PlainText
 {
-    public class Provider : IFactorsEncryption
+    public class Provider : IFactorsEncryptionProvider
     {
         public string DecryptData(string encryptedText)
         {

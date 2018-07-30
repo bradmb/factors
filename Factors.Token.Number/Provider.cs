@@ -3,7 +3,7 @@ using System;
 
 namespace Factors.Token.Number
 {
-    public class Provider : ITokenProvider
+    public class Provider : IFactorsTokenProvider
     {
         private readonly int _tokenLength;
 

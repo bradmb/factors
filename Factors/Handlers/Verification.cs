@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Factors
 {
-    public partial class FactorsInstance
+    public partial class FactorsApplication
     {
         /// <summary>
         /// Verifies that the token passed for the specified user is correct,
@@ -14,7 +14,7 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public FactorVerificationResult VerifyToken<tt>(string tokenValue) where tt : IFeatureType, new()
+        public FactorVerificationResult VerifyToken<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             return Configuration.StorageDatabase.VerifyToken(UserAccount, featureType, tokenValue);
@@ -28,7 +28,7 @@ namespace Factors
         /// <param name="feature"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public Task<FactorVerificationResult> VerifyTokenAsync<tt>(string tokenValue) where tt : IFeatureType, new()
+        public Task<FactorVerificationResult> VerifyTokenAsync<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             return Configuration.StorageDatabase.VerifyTokenAsync(UserAccount, featureType, tokenValue);

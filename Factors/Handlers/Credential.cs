@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Factors
 {
-    public partial class FactorsInstance : IFactorInstance
+    public partial class FactorsApplication : IFactorsApplication
     {
         /// <summary>
         /// Creates a new email credential in the database and sends out
@@ -17,7 +17,7 @@ namespace Factors
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey) where tt : IFeatureType, new()
+        public Task<FactorCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
@@ -33,7 +33,7 @@ namespace Factors
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorCredentialCreationResult CreateCredential<tt>(string credentialKey) where tt : IFeatureType, new ()
+        public FactorCredentialCreationResult CreateCredential<tt>(string credentialKey) where tt : IFactorsFeatureType, new ()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];

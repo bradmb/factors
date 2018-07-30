@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace Factors
 {
-    public partial class FactorsInstance : IFactorInstance
+    public partial class FactorsApplication : IFactorsApplication
     {
-        public IFactorConfiguration Configuration { get; set; }
+        public IFactorsConfiguration Configuration { get; set; }
         public string UserAccount { get; set; }
 
-        internal Dictionary<string, IFactorFeature> Features = new Dictionary<string, IFactorFeature>();
+        internal Dictionary<string, IFactorsFeatureProvider> Features = new Dictionary<string, IFactorsFeatureProvider>();
 
-        public FactorsInstance()
+        public FactorsApplication()
         {
             throw new UnauthorizedAccessException("Please initialize Factors by calling Factors.Initialization.Initialize");
         }
 
-        internal FactorsInstance(IFactorConfiguration configuration)
+        internal FactorsApplication(IFactorsConfiguration configuration)
         {
             Configuration = configuration;
             Configuration.StorageDatabase.InitializeDatabaseSchema();

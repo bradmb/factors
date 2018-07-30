@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Factors.Models.Interfaces
 {
-    public interface IFactorsDatabase
+    public interface IFactorsDatabaseProvider
     {
         /// <summary>
         /// Creates the initial database schema if the
@@ -26,7 +26,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        FactorVerificationResult VerifyToken(string userAccountId, IFeatureType featureType, string tokenValue);
+        FactorVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
 
         /// <summary>
         /// Verifies that the token passed for the specified user is correct,
@@ -37,7 +37,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue);
+        Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
 
         /// <summary>
         /// Stores a two-factor token in the database. Tokens are used
@@ -77,7 +77,7 @@ namespace Factors.Models.Interfaces
         /// <param name="userAccountId"></param>
         /// <param name="excludePendingVerification">If <c>false</c>, will include any credential pending approval</param>
         /// <returns></returns>
-        IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
+        IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
 
         /// <summary>
         /// Lists all factor credentials for the specified User Account ID
@@ -85,6 +85,6 @@ namespace Factors.Models.Interfaces
         /// <param name="userAccountId"></param>
         /// <param name="excludePendingVerification">If <c>false</c>, will include any credential pending approval</param>
         /// <returns></returns>
-        Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
+        Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude);
     }
 }

@@ -7,7 +7,7 @@ using System;
 
 namespace Factors.Database.OrmLite
 {
-    public partial class Provider : IFactorsDatabase
+    public partial class Provider : IFactorsDatabaseProvider
     {
         #region CREDENTIAL CREATION
         public FactorCredential CreateCredential(FactorCredential model)
@@ -70,17 +70,17 @@ namespace Factors.Database.OrmLite
         #endregion CREDENTIAL CREATION
 
         #region LIST CREDENTIAL
-        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
+        public IEnumerable<FactorCredential> ListCredentialsFor(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
             return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, false).GetAwaiter().GetResult();
         }
 
-        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
+        public Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude)
         {
             return this.ListCredentialsForAsync(userAccountId, featureType, accountsToInclude, true);
         }
 
-        private async Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFeatureType featureType, FactorCredentialVerificationType accountsToInclude, bool runAsAsync)
+        private async Task<IEnumerable<FactorCredential>> ListCredentialsForAsync(string userAccountId, IFactorsFeatureType featureType, FactorCredentialVerificationType accountsToInclude, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {

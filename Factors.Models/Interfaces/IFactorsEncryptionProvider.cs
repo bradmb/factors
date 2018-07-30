@@ -1,6 +1,6 @@
 ﻿namespace Factors.Models.Interfaces
 {
-    public interface IFactorsEncryption
+    public interface IFactorsEncryptionProvider
     {
         /// <summary>
         /// Encrypts a string

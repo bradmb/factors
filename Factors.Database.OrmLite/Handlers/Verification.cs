@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Factors.Database.OrmLite
 {
-    public partial class Provider : IFactorsDatabase
+    public partial class Provider : IFactorsDatabaseProvider
     {
         #region VERIFY TOKEN
-        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue)
+        public Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
         {
             return VerifyTokenAsync(userAccountId, featureType, tokenValue, true);
         }
 
-        public FactorVerificationResult VerifyToken(string userAccountId, IFeatureType featureType, string tokenValue)
+        public FactorVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
         {
             return VerifyTokenAsync(userAccountId, featureType, tokenValue, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFeatureType featureType, string tokenValue, bool runAsAsync)
+        private async Task<FactorVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {

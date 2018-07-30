@@ -1,7 +1,7 @@
 ﻿using Factors.Models.Exception;
 using Factors.Models.Interfaces;
 
-namespace Factors.Models
+namespace Factors
 {
     public class FactorsRegistration {
         /// <summary>
@@ -9,7 +9,7 @@ namespace Factors.Models
         /// </summary>
         /// <typeparam name="tt"></typeparam>
         /// <param name="feature"></param>
-        public void RegisterFeature<tt>(IFactorFeature feature) where tt : IFeatureType, new()
+        public void RegisterFeature<tt>(IFactorsFeatureProvider feature) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             if (Factors.Instance.Features.ContainsKey(featureType.FeatureGuid))

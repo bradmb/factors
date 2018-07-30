@@ -1,6 +1,6 @@
 ﻿namespace Factors.Models.Interfaces
 {
-    public interface ITokenProvider
+    public interface IFactorsTokenProvider
     {
         string GenerateToken();
     }

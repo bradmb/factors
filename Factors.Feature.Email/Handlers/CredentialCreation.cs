@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Factors.Feature.Email
 {
-    public partial class EmailInstance : IFactorFeature
+    public partial class EmailProvider : IFactorsFeatureProvider
     {
         /// <summary>
         /// Creates a new email credential in the database and sends out
@@ -16,7 +16,7 @@ namespace Factors.Feature.Email
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorCredentialCreationResult> CreateCredentialAsync(IFactorInstance instance, string credentialKey)
+        public Task<FactorCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey)
         {
             return CreateEmailCredentialAsync(instance, credentialKey, true);
         }
@@ -29,12 +29,12 @@ namespace Factors.Feature.Email
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorCredentialCreationResult CreateCredential(IFactorInstance instance, string credentialKey)
+        public FactorCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey)
         {
             return CreateEmailCredentialAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(IFactorInstance instance, string credentialKey, bool runAsAsync)
+        private async Task<FactorCredentialCreationResult> CreateEmailCredentialAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
         {
             //
             // Sets up our return model on the event of a successful
