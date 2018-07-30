@@ -5,12 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="ServiceStack.OrmLite.Core" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
-    <ProjectReference Include="..\Factors\Factors.csproj" />
   </ItemGroup>
 
 </Project>

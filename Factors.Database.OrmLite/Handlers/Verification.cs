@@ -4,7 +4,7 @@ using ServiceStack.OrmLite;
 using System;
 using System.Threading.Tasks;
 
-namespace Factors.Database.InMemory
+namespace Factors.Database.OrmLite
 {
     public partial class Provider : IFactorsDatabase
     {
@@ -32,7 +32,7 @@ namespace Factors.Database.InMemory
                 var query = db.From<FactorGeneratedToken>()
                     .Where(cred => 
                         cred.UserAccountId == userAccountId
-                        && cred.CredentialType == featureType.FeatureGuid
+                        && cred.FeatureTypeGuid == featureType.FeatureGuid
                         && cred.ExpirationDateUtc >= currentDateUtc
                         && cred.VerificationToken == tokenValue
                     );

@@ -2,15 +2,15 @@
 using Factors.Models.UserAccount;
 using ServiceStack.OrmLite;
 
-namespace Factors.Database.InMemory
+namespace Factors.Database.OrmLite
 {
     public partial class Provider : IFactorsDatabase
     {
         private OrmLiteConnectionFactory _dbConnection;
 
-        public Provider()
+        public Provider(string connectionString, IOrmLiteDialectProvider dialectProvider)
         {
-            _dbConnection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
+            _dbConnection = new OrmLiteConnectionFactory(connectionString, dialectProvider);
         }
 
         public void InitializeDatabaseSchema()

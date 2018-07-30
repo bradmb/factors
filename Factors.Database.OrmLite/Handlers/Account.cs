@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 
-namespace Factors.Database.InMemory
+namespace Factors.Database.OrmLite
 {
     public partial class Provider : IFactorsDatabase
     {
@@ -40,14 +40,12 @@ namespace Factors.Database.InMemory
                             fc.UserAccountId == model.UserAccountId
                             && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
-                            && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
                         )
                         .ConfigureAwait(false)
                     : db.Exists<FactorCredential>(fc =>
                             fc.UserAccountId == model.UserAccountId
                             && fc.FeatureTypeGuid == model.FeatureTypeGuid
                             && fc.CredentialKey == model.CredentialKey
-                            && fc.CredentialSecondaryKey == model.CredentialSecondaryKey
                         );
 
                 //

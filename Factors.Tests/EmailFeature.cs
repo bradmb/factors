@@ -3,6 +3,7 @@ using System.Linq;
 using Factors.Feature.Email;
 using Factors.Feature.Email.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ServiceStack.OrmLite;
 
 namespace Factors.Tests
 {
@@ -24,7 +25,7 @@ namespace Factors.Tests
         {
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new EmailConfiguration
@@ -117,7 +118,7 @@ namespace Factors.Tests
 
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
@@ -140,7 +141,7 @@ namespace Factors.Tests
 
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
@@ -163,7 +164,7 @@ namespace Factors.Tests
 
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
@@ -182,7 +183,7 @@ namespace Factors.Tests
 
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration
@@ -205,7 +206,7 @@ namespace Factors.Tests
 
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).InitializeEmailFactor(new Feature.Email.Models.EmailConfiguration

@@ -91,7 +91,7 @@ namespace Factors.Feature.Email
             {
                 UserAccountId = instance.UserAccount,
                 VerificationToken = newToken,
-                CredentialType = _featureType.FeatureGuid,
+                FeatureTypeGuid = _featureType.FeatureGuid,
                 ExpirationDateUtc = DateTime.UtcNow.Add(_configuration.TokenExpirationTime),
                 CredentialKey = credentialKey
             };

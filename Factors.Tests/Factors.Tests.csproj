@@ -10,11 +10,12 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.1" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.1" />
+    <PackageReference Include="ServiceStack.OrmLite.Core" Version="5.1.0" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite.Core" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Factors.Database.InMemory\Factors.Database.InMemory.csproj" />
-    <ProjectReference Include="..\Factors.Database.SqlServer\Factors.Database.SqlServer.csproj" />
+    <ProjectReference Include="..\Factors.Database.OrmLite\Factors.Database.OrmLite.csproj" />
     <ProjectReference Include="..\Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj" />

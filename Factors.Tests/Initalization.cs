@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ServiceStack.OrmLite;
 using System;
 
 namespace Factors.Tests
@@ -13,7 +14,7 @@ namespace Factors.Tests
         {
             Factor.Initalize(new Models.FactorsConfiguration
             {
-                StorageDatabase = new Database.InMemory.Provider(),
+                StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Number.Provider()
             });
