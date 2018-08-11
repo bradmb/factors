@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Factors.Feature.Email.Smtp
 {
-    public class Provider : IMailProvider
+    public class EmailSmtpProvider : IMailProvider
     {
         private readonly SmtpClient _client;
         
-        public Provider(string host, int port, bool useSSL)
+        public EmailSmtpProvider(string host, int port, bool useSSL)
         {
             _client = new SmtpClient(host, port)
             {

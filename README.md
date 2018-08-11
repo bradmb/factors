@@ -8,9 +8,7 @@ Lots to still do on this project, but here's what is built out so far:
 * Users can have more than one credential (example: three phone numbers, FIDO2 key, and a TOTP token)
 * Numerical multi-factor tokens
 * Modular so you only have to install the features you want
-
-In Progress:
-* Email multi-factor authentication
+* Email multi-factor authentication (with support for SMTP and Postmark as mail providers)
 
 To-do:
 * Text-based multi-factor tokens

@@ -6,7 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
+    <PackageReference Include="Postmark" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Factors.Feature.Email\Factors.Feature.Email.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,16 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Configurations>Debug;Release;DebugPostmark</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugPostmark|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE;DEBUGPOSTMARK;NETCOREAPP;NETCOREAPP2_1</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETCOREAPP;NETCOREAPP2_1;DEBUGSMTP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +28,7 @@
     <ProjectReference Include="..\Factors.Database.OrmLite\Factors.Database.OrmLite.csproj" />
     <ProjectReference Include="..\Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj" />
+    <ProjectReference Include="..\Factors.Feature.Email.Postmark\Factors.Feature.Email.Postmark.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email\Factors.Feature.Email.csproj" />
     <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />

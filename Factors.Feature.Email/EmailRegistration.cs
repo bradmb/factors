@@ -1,5 +1,4 @@
 ﻿using Factors.Feature.Email.Models;
-using Factors.Models;
 
 namespace Factors.Feature.Email
 {

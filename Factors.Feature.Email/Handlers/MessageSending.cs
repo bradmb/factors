@@ -1,6 +1,5 @@
 ﻿using Factors.Feature.Email.Models;
 using Factors.Models.Interfaces;
-using Factors.Models.UserAccount;
 using System;
 using System.Net.Mail;
 using System.Threading.Tasks;

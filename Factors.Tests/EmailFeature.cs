@@ -14,9 +14,11 @@ namespace Factors.Tests
         private readonly string _userEmailAddress = "user@domain.tld";
         private readonly string _senderAddress = "factors@domain.tld";
         private readonly string _senderName = "Factors";
-#if DEBUG
+#if DEBUGSMTP
         private readonly string _smtpHost = "localhost";
         private readonly int _smtpPort = 25;
+#elif DEBUGPOSTMARK
+        private readonly string _postmarkServerToken = "";
 #endif
         private readonly int _tokenExpirationTime = 5;
 
@@ -32,10 +34,12 @@ namespace Factors.Tests
             {
                 FromAddress = _senderAddress,
                 FromName = _senderName,
-#if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
-#else
-                MailProvider = new Feature.Email.NullRoute.Provider(),
+#if DEBUGPOSTMARK
+                MailProvider = new Feature.Email.Postmark.EmailPostmarkProvider(_postmarkServerToken),
+#elif DEBUGSMTP
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+#elif !DEBUG
+                MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
@@ -124,10 +128,10 @@ namespace Factors.Tests
             }).UseEmailFactor(new EmailConfiguration
             {
                 FromName = _senderName,
-#if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
-#else
-                MailProvider = new Feature.Email.NullRoute.Provider(),
+#if DEBUGSMTP
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+#elif !DEBUG
+                MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
@@ -147,10 +151,10 @@ namespace Factors.Tests
             }).UseEmailFactor(new EmailConfiguration
             {
                 FromAddress = _senderAddress,
-#if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
-#else
-                MailProvider = new Feature.Email.NullRoute.Provider(),
+#if DEBUGSMTP
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+#elif !DEBUG
+                MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
                 TokenExpirationTime = TimeSpan.FromMinutes(_tokenExpirationTime)
             });
@@ -189,10 +193,10 @@ namespace Factors.Tests
             }).UseEmailFactor(new EmailConfiguration
             {
                 FromAddress = _senderAddress,
-#if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false)
-#else
-                MailProvider = new Feature.Email.NullRoute.Provider()
+#if DEBUGSMTP
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false)
+#elif !DEBUG
+                MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider()
 #endif
             });
         }
@@ -212,10 +216,10 @@ namespace Factors.Tests
             {
                 FromAddress = _senderAddress,
                 FromName = _senderName,
-#if DEBUG
-                MailProvider = new Feature.Email.Smtp.Provider(_smtpHost, _smtpPort, false),
-#else
-                MailProvider = new Feature.Email.NullRoute.Provider(),
+#if DEBUGSMTP
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+#elif !DEBUG
+                MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
                 TokenExpirationTime = TimeSpan.FromMinutes(-_tokenExpirationTime)
             });

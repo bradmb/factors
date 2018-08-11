@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Factors.Feature.Email.NullRoute
 {
-    public class Provider : IMailProvider
+    public class EmailNullRouteProvider : IMailProvider
     {
         public EmailSendResult Send(MailMessage message)
         {
