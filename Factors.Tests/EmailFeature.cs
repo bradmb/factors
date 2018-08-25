@@ -97,7 +97,7 @@ namespace Factors.Tests
         }
 
         [TestMethod]
-        public void TryAndPassInvalidNewAccountValidationCOde()
+        public void TryAndPassInvalidNewAccountValidationCode()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
             var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));

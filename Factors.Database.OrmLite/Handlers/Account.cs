@@ -103,7 +103,7 @@ namespace Factors.Database.OrmLite
                 }
 
                 var queryResult = runAsAsync
-                    ? await db.SelectAsync(query)
+                    ? await db.SelectAsync(query).ConfigureAwait(false)
                     : db.Select(query);
 
                 return queryResult;
