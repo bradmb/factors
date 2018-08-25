@@ -7,10 +7,16 @@ namespace Factors.Database.OrmLite
     public partial class Provider : IFactorsDatabaseProvider
     {
         private OrmLiteConnectionFactory _dbConnection;
+        private IFactorsEncryptionProvider _encryption;
 
         public Provider(string connectionString, IOrmLiteDialectProvider dialectProvider)
         {
             _dbConnection = new OrmLiteConnectionFactory(connectionString, dialectProvider);
+        }
+
+        public void InitializeEncryptionProvider(IFactorsEncryptionProvider encryptionProvider)
+        {
+            _encryption = encryptionProvider;
         }
 
         public void InitializeDatabaseSchema()

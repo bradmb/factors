@@ -7,9 +7,9 @@ namespace Factors
     public partial class FactorsApplication : IFactorsApplication
     {
         /// <summary>
-        /// Creates a new email credential in the database and sends out
-        /// an email with a verification token which will be used to verify
-        /// the email address is legitimate
+        /// Creates a new credential in the database and sends out
+        /// a message with a verification token which will be used to verify
+        /// the credential is legitimate
         /// </summary>
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>

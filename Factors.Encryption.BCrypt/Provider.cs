@@ -1,18 +1,19 @@
 ﻿using Factors.Models.Interfaces;
-using System;
 
-namespace Factors.Encryption.PlainText
+namespace Factors.Encryption.BCryptStandard
 {
     public class Provider : IFactorsEncryptionProvider
     {
         public string HashData(string text)
         {
-            return text;
+            text = text.ToLower();
+            return BCrypt.Net.BCrypt.HashString(text);
         }
 
         public bool VerifyHash(string text, string hash)
         {
-            return String.Equals(text, hash, StringComparison.InvariantCultureIgnoreCase);
+            text = text.ToLower();
+            return BCrypt.Net.BCrypt.Verify(text, hash);
         }
     }
 }

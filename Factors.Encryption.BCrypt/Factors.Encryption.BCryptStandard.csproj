@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Factors.Encryption.BCryptStandard</AssemblyName>
+    <RootNamespace>Factors.Encryption.BCryptStandard</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -28,7 +28,7 @@ namespace Factors.Tests
             Factors.Initalize(new Models.FactorsConfiguration
             {
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
-                EncryptionProvider = new Encryption.PlainText.Provider(),
+                EncryptionProvider = new Encryption.BCryptStandard.Provider(),
                 TokenProvider = new Token.Number.Provider()
             }).UseEmailFactor(new EmailConfiguration
             {

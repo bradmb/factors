@@ -13,6 +13,13 @@ namespace Factors.Models.Interfaces
         void InitializeDatabaseSchema();
 
         /// <summary>
+        /// Attaches the encryption provider to the database
+        /// provider so it can encrypt and hash data
+        /// </summary>
+        /// <param name="encryptionProvider"></param>
+        void InitializeEncryptionProvider(IFactorsEncryptionProvider encryptionProvider);
+
+        /// <summary>
         /// Releases created resources
         /// </summary>
         void Dispose();

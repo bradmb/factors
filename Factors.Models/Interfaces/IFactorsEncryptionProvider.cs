@@ -3,13 +3,18 @@
     public interface IFactorsEncryptionProvider
     {
         /// <summary>
-        /// Encrypts a string
+        /// Hashes a string
         /// </summary>
-        string EncryptData(string text);
+        /// <param name="text"></param>
+        /// <returns></returns>
+        string HashData(string text);
 
         /// <summary>
-        /// Decrypts a string
+        /// Verifies that the passed value matches the hash
         /// </summary>
-        string DecryptData(string encryptedText);
+        /// <param name="text"></param>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        bool VerifyHash(string text, string hash);
     }
 }

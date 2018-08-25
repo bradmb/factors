@@ -2,6 +2,7 @@
 using Factors.Models.UserAccount;
 using ServiceStack.OrmLite;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Factors.Database.OrmLite
@@ -34,18 +35,18 @@ namespace Factors.Database.OrmLite
                         cred.UserAccountId == userAccountId
                         && cred.FeatureTypeGuid == featureType.FeatureGuid
                         && cred.ExpirationDateUtc >= currentDateUtc
-                        && cred.VerificationToken == tokenValue
                     );
 
                 var queryResult = runAsAsync
-                    ? await db.SingleAsync(query)
-                    : db.Single(query);
+                    ? await db.SelectAsync(query).ConfigureAwait(false)
+                    : db.Select(query);
 
                 //
-                // If it found (because expired or a bad token),
-                // return to user
+                // If it isn't found (because expired, no hash matches,
+                // or just doesn't exist), return to user
                 //
-                if (queryResult == null)
+                var matchingResults = queryResult.Where(qr => _encryption.VerifyHash(tokenValue, qr.VerificationToken));
+                if (!matchingResults.Any())
                 {
                     return new FactorsCredentialCreationVerificationResult
                     {
@@ -58,12 +59,13 @@ namespace Factors.Database.OrmLite
                 // If we made it this far, everything matches. We'll now
                 // delete the verification record since it's not needed anymore
                 //
+                var matchingIds = matchingResults.Select(mr => mr.Id);
                 if (runAsAsync)
                 {
-                    await db.DeleteByIdAsync<FactorsCredentialGeneratedToken>(queryResult.Id).ConfigureAwait(false);
+                    await db.DeleteByIdsAsync<FactorsCredentialGeneratedToken>(matchingIds).ConfigureAwait(false);
                 } else
                 {
-                    db.DeleteById<FactorsCredentialGeneratedToken>(queryResult.Id);
+                    db.DeleteByIds<FactorsCredentialGeneratedToken>(matchingIds);
                 }
 
                 //
@@ -71,23 +73,23 @@ namespace Factors.Database.OrmLite
                 // that is currently marked as "unverified" and change that flag
                 // to "verified"
                 //
+                var matchingKeys = matchingResults.Select(mr => mr.CredentialKey);
                 var userCredentialQuery = db.From<FactorsCredential>()
                     .Where(cred => cred.UserAccountId == userAccountId
-                    && cred.CredentialKey == queryResult.CredentialKey
+                    && matchingKeys.Contains(cred.CredentialKey)
                     && cred.CredentialIsValidated == false);
 
-                var userCredential = runAsAsync
-                    ? await db.SingleAsync(userCredentialQuery).ConfigureAwait(false)
-                    : db.Single(userCredentialQuery);
+                var userCredentials = runAsAsync
+                    ? await db.SelectAsync(userCredentialQuery).ConfigureAwait(false)
+                    : db.Select(userCredentialQuery);
 
-                userCredential.CredentialIsValidated = true;
-
+                userCredentials.ForEach(uc => uc.CredentialIsValidated = true);
                 if (runAsAsync)
                 {
-                    await db.UpdateAsync(userCredential);
+                    await db.UpdateAllAsync(userCredentials);
                 } else
                 {
-                    db.Update(userCredential);
+                    db.UpdateAll(userCredentials);
                 }
 
                 //
@@ -118,13 +120,23 @@ namespace Factors.Database.OrmLite
             model.Id = 0;
             model.CreatedDateUtc = DateTime.UtcNow;
 
+            //
+            // Hash the verification token in the database, but
+            // put an unhashed copy of it aside so we can return
+            // it to the user's code
+            //
+            var unhashedToken = model.VerificationToken;
+            model.VerificationToken = _encryption.HashData(model.VerificationToken);
+
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
                 var tokenId = runAsAsync
                     ? await db.InsertAsync(model).ConfigureAwait(false)
                     : db.Insert(model);
 
+                model.VerificationToken = unhashedToken;
                 model.Id = tokenId;
+
                 return model;
             }
         }

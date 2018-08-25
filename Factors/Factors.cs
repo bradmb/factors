@@ -1,6 +1,4 @@
 ﻿using Factors.Models;
-using Factors.Models.Exception;
-using Factors.Models.Interfaces;
 
 namespace Factors
 {
@@ -23,6 +21,8 @@ namespace Factors
         {
             Registration = new FactorsRegistration();
             Instance = new FactorsApplication(configuration);
+
+            Instance.Configuration.StorageDatabase.InitializeEncryptionProvider(Instance.Configuration.EncryptionProvider);
 
             return Registration;
         }

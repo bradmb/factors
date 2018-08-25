@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Helpers", "Factors.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Token.Alphanumeric", "Factors.Token.Alphanumeric\Factors.Token.Alphanumeric.csproj", "{3709A6B4-451F-41E1-A498-76AC2B27C1D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factors.Encryption.BCryptStandard", "Factors.Encryption.BCrypt\Factors.Encryption.BCryptStandard.csproj", "{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,6 +124,12 @@ Global
 		{3709A6B4-451F-41E1-A498-76AC2B27C1D9}.DebugPostmark|Any CPU.Build.0 = Debug|Any CPU
 		{3709A6B4-451F-41E1-A498-76AC2B27C1D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3709A6B4-451F-41E1-A498-76AC2B27C1D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.DebugPostmark|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.DebugPostmark|Any CPU.Build.0 = Debug|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +144,7 @@ Global
 		{9FC94C3D-6D3D-4CEA-8827-EAF2EB7C0215} = {D35099F7-7BD0-4798-A765-F94CAD442239}
 		{BC148E84-2994-4D73-BFEE-76DE4B8AFB24} = {C1209634-9BD3-43AB-86DD-2AEFB07465CD}
 		{3709A6B4-451F-41E1-A498-76AC2B27C1D9} = {C1209634-9BD3-43AB-86DD-2AEFB07465CD}
+		{BFC965DE-BB63-4CCB-85B5-8D81D17A7A31} = {D54BF6A6-9992-4800-8153-40F37963F245}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4917070E-F983-4808-9530-C0D868C02567}

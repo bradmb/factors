@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Factors.Database.OrmLite\Factors.Database.OrmLite.csproj" />
+    <ProjectReference Include="..\Factors.Encryption.BCrypt\Factors.Encryption.BCryptStandard.csproj" />
     <ProjectReference Include="..\Factors.Encryption.PlainText\Factors.Encryption.PlainText.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.NullRoute\Factors.Feature.Email.NullRoute.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.Postmark\Factors.Feature.Email.Postmark.csproj" />
