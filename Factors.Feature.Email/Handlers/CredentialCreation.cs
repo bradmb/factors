@@ -79,46 +79,23 @@ namespace Factors.Feature.Email
                 };
             }
 
-            //
-            // Generates a new token to be used to verify the credential
-            //
-            var newToken = instance.Configuration.TokenProvider.GenerateToken();
+            var sendTokenResult = runAsAsync
+                ? await this.SendCredentialValidationAsync(instance, credentialKey).ConfigureAwait(false)
+                : this.SendCredentialValidation(instance, credentialKey);
 
-            //
-            // Stores the new token in the database
-            //
-            var tokenDetails = new FactorsCredentialGeneratedToken
-            {
-                UserAccountId = instance.UserAccount,
-                VerificationToken = newToken,
-                FeatureTypeGuid = _featureType.FeatureGuid,
-                ExpirationDateUtc = DateTime.UtcNow.Add(_configuration.TokenExpirationTime),
-                CredentialKey = credentialKey
-            };
-
-            credentialResult.TokenDetails = runAsAsync
-                ? await instance.Configuration.StorageDatabase.StoreTokenAsync(tokenDetails).ConfigureAwait(false)
-                : instance.Configuration.StorageDatabase.StoreToken(tokenDetails);
-
-            //
-            // Send out the verification token to the user's email address
-            //
-            var messageSendResult = runAsAsync
-                ? await SendTokenMessageAsync(credentialKey, newToken).ConfigureAwait(false)
-                : SendTokenMessage(credentialKey, newToken);
-
-            if (!messageSendResult.IsSuccess)
+            if (!sendTokenResult.IsSuccess)
             {
                 return new FactorsCredentialCreationResult
                 {
                     IsSuccess = false,
-                    Message = messageSendResult.Message
+                    Message = sendTokenResult.Message
                 };
             }
 
             //
             // And finally return our result
             //
+            credentialResult.TokenDetails = sendTokenResult.TokenDetails;
             return credentialResult;
         }
     }
