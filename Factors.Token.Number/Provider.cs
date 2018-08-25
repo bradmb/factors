@@ -1,4 +1,5 @@
-﻿using Factors.Models.Interfaces;
+﻿using Factors.Helpers;
+using Factors.Models.Interfaces;
 using System;
 
 namespace Factors.Token.Number
@@ -19,12 +20,10 @@ namespace Factors.Token.Number
 
         public string GenerateToken()
         {
-            var random = new Random();
-
             var startNumber = Int32.Parse("1".PadRight(_tokenLength, '0'));
             var stopNumber = Int32.Parse("9".PadRight(_tokenLength, '9'));
 
-            var token = random.Next(startNumber, stopNumber);
+            var token = NumberGenerator.GenerateRandomInteger(startNumber, stopNumber);
             return token.ToString();
         }
     }
