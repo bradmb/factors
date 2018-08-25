@@ -2,6 +2,7 @@
 using Factors.Models.UserAccount;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,28 +35,20 @@ namespace Factors.Feature.Email
             };
 
             //
-            // Creates the new "pending verification" credential
+            // Make sure we have a matching credential in the database, even
+            // if it's an unverified one
             //
-            var credentailDetails = new FactorsCredential
-            {
-                UserAccountId = instance.UserAccount,
-                FeatureTypeGuid = _featureType.FeatureGuid,
-                CredentialKey = credentialKey
-            };
+            var credentialList = runAsAsync
+                ? await instance.Configuration.StorageDatabase.ListCredentialsForAsync(instance.UserAccount, _featureType, FactorsCredentialListQueryType.AllAccount).ConfigureAwait(false)
+                : instance.Configuration.StorageDatabase.ListCredentialsFor(instance.UserAccount, _featureType, FactorsCredentialListQueryType.AllAccount);
 
-            try
-            {
-                credentialResult.CredentailDetails = runAsAsync
-                    ? await instance.Configuration.StorageDatabase.CreateCredentialAsync(credentailDetails).ConfigureAwait(false)
-                    : instance.Configuration.StorageDatabase.CreateCredential(credentailDetails);
-            }
-            catch (Exception ex)
+            if (credentialList?.Any(cd => String.Equals(cd.CredentialKey, credentialKey, StringComparison.InvariantCultureIgnoreCase)) != true)
             {
                 return new FactorsAuthenticationCreationResult
                 {
                     IsSuccess = false,
                     VerificationMessageSent = false,
-                    Message = $"There was an issue when creating the credential: {ex.Message}"
+                    Message = $"There was an issue when sending out the verification token: Unable to identify credentials"
                 };
             }
 

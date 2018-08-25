@@ -47,7 +47,8 @@ namespace Factors.Feature.Email
             if (String.IsNullOrWhiteSpace(messageBody))
             {
                 messageBody = "Your verification code is: {{verification-code}}";
-            } else
+            }
+            else
             {
                 message.IsBodyHtml = _configuration.MessageBodyTemplateIsHTML;
             }

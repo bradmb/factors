@@ -63,7 +63,8 @@ namespace Factors.Database.OrmLite
                 if (runAsAsync)
                 {
                     await db.DeleteByIdsAsync<FactorsCredentialGeneratedToken>(matchingIds).ConfigureAwait(false);
-                } else
+                }
+                else
                 {
                     db.DeleteByIds<FactorsCredentialGeneratedToken>(matchingIds);
                 }
@@ -87,7 +88,8 @@ namespace Factors.Database.OrmLite
                 if (runAsAsync)
                 {
                     await db.UpdateAllAsync(userCredentials);
-                } else
+                }
+                else
                 {
                     db.UpdateAll(userCredentials);
                 }
