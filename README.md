@@ -130,6 +130,21 @@ The second parameter is `"token-value"`, which is the actual token that the user
 
 When `Factors.ForUser().VerifyToken()` returns, it will return an object that lets you know if the verification request was completed.
 
+### Verifying An Existing Credential
+If your application needs to start a new verification request for an already existing user credential, you can simply call the following method:
+
+```
+var tokenRequest = Factors.ForUser("my-user-account-name").BeginTokenRequest<EmailFeatureType>("name@domain.tld");
+```
+
+In terms of functionality, this is very similar to the `Factors.ForUser().CreateCredential()` method. You pass the user's unique id from your application into the `"my-user-account-name"` parameter, and the credential you want to validate against in the `"name@domain.tld"` parameter. The only difference here is that, instead of creating a new credential, it jumps directly to the token generation and email delivery logic.
+
+When `Factors.ForUser().BeginTokenRequest()` returns, it will return an object very similiar to the credential creation method, including the important `TokenRequestId` and other data, such as information about the associated credential and the token that was generated.
+
+To verify the token, simply follow the same steps previously covered for `Factors.ForUser().VerifyToken()`, as that method also handles verification for this method as well.
+
+You will find most features are going to follow this exact same process, so any feature that does so will simply refer back to this section of the document on how to create/verify tokens and credentials
+
 ### Phone Feature
 This allows you to send out your tokens via text message (SMS) or voice call, and currently supports Twilio out of the box.
 
