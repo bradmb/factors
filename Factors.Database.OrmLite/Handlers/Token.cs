@@ -158,8 +158,8 @@ namespace Factors.Database.OrmLite
                 }
 
                 var tokenId = runAsAsync
-                    ? await db.InsertAsync(model).ConfigureAwait(false)
-                    : db.Insert(model);
+                    ? await db.InsertAsync(model, selectIdentity: true).ConfigureAwait(false)
+                    : db.Insert(model, selectIdentity: true);
 
                 model.VerificationToken = unhashedToken;
                 model.Id = tokenId;

@@ -60,8 +60,8 @@ namespace Factors.Database.OrmLite
                 // If not, let's add it
                 //
                 var credentialId = runAsAsync
-                    ? await db.InsertAsync(model).ConfigureAwait(false)
-                    : db.Insert(model);
+                    ? await db.InsertAsync(model, selectIdentity: true).ConfigureAwait(false)
+                    : db.Insert(model, selectIdentity: true);
 
                 model.Id = credentialId;
                 return model;
