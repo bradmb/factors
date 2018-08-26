@@ -12,7 +12,7 @@ Lots to still do on this project, but here's what is built out so far:
 * Alphanumeric multi-factor tokens
 * Modular so you only have to install the features you want
 * Email multi-factor authentication (with support for SMTP and Postmark as mail providers)
-* SMS and Phone Call multi-factor (with support for Twilio)
+* SMS and Phone Call multi-factor (with support for Twilio as a provider)
 
 To-do:
 * Authy multi-factor
