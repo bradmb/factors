@@ -95,7 +95,40 @@ What outbound email transport provider you'll be using. Out of the box you can u
 This is how long the generated token will be valid for. You won't want the tokens to be valid forever, so they will expire after a certain length of time (determined by your entry in this field). Five minutes is usually enough time for a user to receive and enter their token, so it's the suggested minimum value.
 
 ### Adding A New Email Credential
-TBD
+When adding a new credential (for any feature), Factors will require that credential to be verified before it's in the "authorized" list of verified credentials. So when you add a new credential, Factors will send out a verification token (if applicable) to the service you're requesting a new credential for.
+
+To add a new credential, simply call the following method:
+```
+var emailCredential = Factors.ForUser("my-user-account-name").CreateCredential<EmailFeatureType>("name@domain.tld");
+```
+
+Now, let's go over each piece here and explain it in more detail.
+
+First, we have `Factors.ForUser("my-user-account-nane")`. Factors keeps track of your users and all of the credentials associated with them, so you will pass a unique id associated with that user (their email address, database id, etc) in the `ForUser()` method so Factors knows who we're managing credentials for.
+
+Next, we have `.CreateCredential<EmailFeatureType>`. This tells Factor what feature we're wanting to interact with. Every feature has it's own type object, and Factors uses this to not only interact with that feature, but also ensure that the data we are storing in the database is associated with the feature we're using.
+
+Finally, there's `"name@domain.tld"`. This is simply the credential we're adding to Factors that we'd like to use two-factor authentication with.
+
+When `Factors.ForUser().CreateCredential()` returns, it will return an object that let's you know if the creation was a success, a `TokenRequestId`, and other information associated with the credential and the token that was generated to verify this new credential. Please note that `TokenRequestId` is important and a value your application needs to use when verifying tokens.
+
+At this stage, an email would have been sent to your user, providing them with their token value that you're application is expecting them to provide.
+
+When your user provides the token to the application and you pass it back to Factors for validation, you simply call the following method:
+
+```
+var verificationResult = Factors.ForUser("my-user-account-name").VerifyToken<EmailFeatureType>("token-id", "token-value");
+```
+
+Let's cover the pieces that are new here. We'll skip over `Factors.ForUser()` and jump into the new parts.
+
+First, we have `.VerifyToken<EmailFeatureType>`. This is the method you will call when you're verifying a token's value that the user has provided to you. As you can see, we're passing `EmailFeatureType` here, pretty much exactly how we did for `CreateCredential()` above, letting Factors know that we want to validate a token generated for an email address credential.
+
+Next, we have the two parameters. The first parameter is `"token-id"`, which is the `TokenRequestId` that you received when you called `CreateCredential()`. You need to pass this identifier so Factors knows which token to verify against in the database, because in theory you could have multiple verification requests in progress at the same time for the same user.
+
+The second parameter is `"token-value"`, which is the actual token that the user typed into your application and will be checked against the database to determine if it's a match (either by verifying the hashed value in the database if you have that enabled or by doing a simple comparison if you don't have the encryption module installed)
+
+When `Factors.ForUser().VerifyToken()` returns, it will return an object that lets you know if the verification request was completed.
 
 ### Phone Feature
 This allows you to send out your tokens via text message (SMS) or voice call, and currently supports Twilio out of the box.
