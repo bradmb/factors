@@ -11,12 +11,12 @@ namespace Factors.Feature.Phone
     {
         public FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
-            return this.BeginTokenRequestAsync(instance, credentialKey, false).GetAwaiter().GetResult();
+            return this.BeginTokenRequestAsync(instance, credentialKey, false, parameters).GetAwaiter().GetResult();
         }
 
         public Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
-            return this.BeginTokenRequestAsync(instance, credentialKey, true);
+            return this.BeginTokenRequestAsync(instance, credentialKey, true, parameters);
         }
 
         private async Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync, params KeyValuePair<string, string>[] parameters)
@@ -97,12 +97,12 @@ namespace Factors.Feature.Phone
             var messageSendResult = runAsAsync
                 ? await SendTokenMessageAsync(credentialKey, 
                     messageText, 
-                    credentialResult.TokenRequestId.Value, 
+                    newToken, 
                     sendAsPhoneCall).ConfigureAwait(false)
 
                 : SendTokenMessage(credentialKey,
                     messageText,
-                    credentialResult.TokenRequestId.Value,
+                    newToken,
                     sendAsPhoneCall);
 
             if (!messageSendResult.IsSuccess)

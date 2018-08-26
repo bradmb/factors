@@ -6,6 +6,7 @@ using Factors.Feature.Phone.Twilio;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceStack.OrmLite;
 using Factors.Feature.Phone.NullRoute;
+using System.Collections.Generic;
 
 namespace Factors.Tests
 {
@@ -17,6 +18,7 @@ namespace Factors.Tests
         private readonly string _accountSid = "ACCOUNTSID";
         private readonly string _authToken = "AUTHTOKEN";
         private readonly string _phoneNumber = "PHONENUMBER";
+        private readonly Uri _voiceEndpoint = new Uri("https://domain.tld/voice");
         private readonly int _tokenExpirationTime = 5;
 
         [TestInitialize]
@@ -30,6 +32,8 @@ namespace Factors.Tests
                 TokenProvider = new Token.Number.Provider()
             }).UsePhoneFactor(new PhoneConfiguration
             {
+                EnablePhoneCallSupport = true,
+                PhoneCallInboundEndpoint = _voiceEndpoint,
 #if DEBUGTWILIO
                 MessagingProvider = new PhoneTwilioProvider(_accountSid, _authToken, _phoneNumber),
 #else
@@ -65,6 +69,15 @@ namespace Factors.Tests
         public void VerifyPhoneToken()
         {
             var phoneCredential = Factors.ForUser(_userAccount).CreateCredential<PhoneFeatureType>(_userPhoneNumber);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<PhoneFeatureType>(phoneCredential.TokenRequestId.Value, phoneCredential.TokenDetails.VerificationToken);
+
+            Assert.IsTrue(verificationResult.Success);
+        }
+
+        [TestMethod]
+        public void VerifyPhoneTokenUsingVoiceEndpoint()
+        {
+            var phoneCredential = Factors.ForUser(_userAccount).CreateCredential<PhoneFeatureType>(_userPhoneNumber, new KeyValuePair<string, string>("phonecall", "true"));
             var verificationResult = Factors.ForUser(_userAccount).VerifyToken<PhoneFeatureType>(phoneCredential.TokenRequestId.Value, phoneCredential.TokenDetails.VerificationToken);
 
             Assert.IsTrue(verificationResult.Success);

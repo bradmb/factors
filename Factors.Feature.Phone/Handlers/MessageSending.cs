@@ -7,21 +7,21 @@ namespace Factors.Feature.Phone
 {
     public partial class PhoneProvider : IFactorsFeatureProvider
     {
-        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall)
+        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, string tokenValue, bool sendAsPhoneCall)
         {
-            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, false).GetAwaiter().GetResult();
+            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenValue, sendAsPhoneCall, false).GetAwaiter().GetResult();
         }
 
-        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall)
+        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenValue, bool sendAsPhoneCall)
         {
-            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, true);
+            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenValue, sendAsPhoneCall, true);
         }
 
-        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall, bool runAsAsync)
+        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenValue, bool sendAsPhoneCall, bool runAsAsync)
         {
             if (sendAsPhoneCall)
             {
-                var phoneEndpoint = new Uri($"{_configuration.PhoneCallInboundEndpoint}?tokenId={tokenId}");
+                var phoneEndpoint = new Uri($"{_configuration.PhoneCallInboundEndpoint}?token={tokenValue}");
 
                 return runAsAsync
                     ? await _configuration.MessagingProvider.SendPhoneCallAsync(phoneNumber, phoneEndpoint).ConfigureAwait(false)

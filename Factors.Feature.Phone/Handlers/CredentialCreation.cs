@@ -19,7 +19,7 @@ namespace Factors.Feature.Phone
         /// <returns></returns>
         public Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
-            return CreatePhoneCredentialAsync(instance, credentialKey, true);
+            return CreatePhoneCredentialAsync(instance, credentialKey, true, parameters);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Factors.Feature.Phone
         /// <returns></returns>
         public FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
-            return CreatePhoneCredentialAsync(instance, credentialKey, false).GetAwaiter().GetResult();
+            return CreatePhoneCredentialAsync(instance, credentialKey, false, parameters).GetAwaiter().GetResult();
         }
 
         private async Task<FactorsCredentialCreationResult> CreatePhoneCredentialAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync, params KeyValuePair<string, string>[] parameters)
@@ -75,8 +75,8 @@ namespace Factors.Feature.Phone
             }
 
             var sendTokenResult = runAsAsync
-                ? await this.BeginTokenRequestAsync(instance, credentialKey).ConfigureAwait(false)
-                : this.BeginTokenRequest(instance, credentialKey);
+                ? await this.BeginTokenRequestAsync(instance, credentialKey, parameters).ConfigureAwait(false)
+                : this.BeginTokenRequest(instance, credentialKey, parameters);
 
             if (!sendTokenResult.IsSuccess)
             {

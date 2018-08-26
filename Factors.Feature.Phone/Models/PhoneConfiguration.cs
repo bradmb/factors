@@ -17,7 +17,7 @@ namespace Factors.Feature.Phone.Models
         /// This is the URL that will be called by the phone call
         /// messaging provider when a phone call is connected, which
         /// will then provide the phone call text that will be read
-        /// to the end user. The token's id will be passed via a "?tokenId="
+        /// to the end user. The token's value will be passed via a "?token="
         /// URL parameter, which is appended to the URL automatically.
         /// </summary>
         public Uri PhoneCallInboundEndpoint { get; set; }
