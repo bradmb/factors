@@ -6,7 +6,7 @@
 Lots to still do on this project, but here's what is built out so far:
 * Support for multiple database types (via ServiceStack.OrmLite)
 * Users can have more than one credential (example: three phone numbers, FIDO2 key, and a TOTP token)
-* Database encryption of tokens (via hashing)
+* Database one-way hashing of tokens
 * Numerical multi-factor tokens
 * Text-based multi-factor tokens
 * Alphanumeric multi-factor tokens
