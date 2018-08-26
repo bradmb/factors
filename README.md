@@ -184,4 +184,22 @@ To understand how the methods work, please refer to the documentation in the ema
 
 2. This should be pretty obvious, but any place in the email example where it shows the `"name@domain.tld"` email address example should be replaced with the user's phone number that you'll be sending a text message (SMS) or voice call to.
 
+# Using Multiple Features
+Factors was designed so you could use as many features as you want. The initalization method supports chaining, so if you wanted to setup multiple features at once, you'd simply do the following:
+
+```
+Factors.Initalize(new Models.FactorsConfiguration
+{
+   ...
+}).UseEmailFactor(new EmailConfiguration
+{
+   ...
+}).UsePhoneFactor(new PhoneConfiguration
+{
+   ...
+});
+```
+
+This will initalize each feature and allow you to use them all.
+
 *Pull requests and issue reports always appreciated*
