@@ -7,6 +7,7 @@ namespace Factors.Models.UserAccount
     public class FactorsCredential
     {
         [PrimaryKey]
+        [AutoIncrement]
         public long Id { get; set; }
 
         [Index]

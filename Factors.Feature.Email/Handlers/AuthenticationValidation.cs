@@ -1,36 +1,32 @@
 ﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Factors.Feature.Email
 {
     public partial class EmailProvider : IFactorsFeatureProvider
     {
-        public FactorsAuthenticationCreationResult SendCredentialValidation(IFactorsApplication instance, string credentialKey)
+        public FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey)
         {
-            return this.SendCredentialValidationAsync(instance, credentialKey, false).GetAwaiter().GetResult();
+            return this.BeginTokenRequestAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        public Task<FactorsAuthenticationCreationResult> SendCredentialValidationAsync(IFactorsApplication instance, string credentialKey)
+        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey)
         {
-            return this.SendCredentialValidationAsync(instance, credentialKey, true);
+            return this.BeginTokenRequestAsync(instance, credentialKey, true);
         }
 
-        private async Task<FactorsAuthenticationCreationResult> SendCredentialValidationAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
+        private async Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
         {
             //
             // Sets up our return model on the event of a successful
             // credential creation
             //
-            var credentialResult = new FactorsAuthenticationCreationResult
+            var credentialResult = new FactorsTokenRequestResult
             {
                 IsSuccess = true,
-                VerificationMessageSent = true,
                 Message = "Validation token sent to credential",
             };
 
@@ -44,11 +40,10 @@ namespace Factors.Feature.Email
 
             if (credentialList?.Any(cd => String.Equals(cd.CredentialKey, credentialKey, StringComparison.InvariantCultureIgnoreCase)) != true)
             {
-                return new FactorsAuthenticationCreationResult
+                return new FactorsTokenRequestResult
                 {
                     IsSuccess = false,
-                    VerificationMessageSent = false,
-                    Message = $"There was an issue when sending out the verification token: Unable to identify credentials"
+                    Message = $"There was an issue when sending out the token: Unable to identify user account is setup for email tokens"
                 };
             }
 
@@ -82,7 +77,7 @@ namespace Factors.Feature.Email
 
             if (!messageSendResult.IsSuccess)
             {
-                return new FactorsAuthenticationCreationResult
+                return new FactorsTokenRequestResult
                 {
                     IsSuccess = false,
                     Message = messageSendResult.Message

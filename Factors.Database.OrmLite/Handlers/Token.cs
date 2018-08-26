@@ -10,17 +10,17 @@ namespace Factors.Database.OrmLite
     public partial class Provider : IFactorsDatabaseProvider
     {
         #region VERIFY TOKEN
-        public Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
+        public Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, Guid tokenRequestId, string tokenValue)
         {
-            return VerifyTokenAsync(userAccountId, featureType, tokenValue, true);
+            return VerifyTokenAsync(userAccountId, featureType, tokenRequestId, tokenValue, true);
         }
 
-        public FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue)
+        public FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, Guid tokenRequestId, string tokenValue)
         {
-            return VerifyTokenAsync(userAccountId, featureType, tokenValue, false).GetAwaiter().GetResult();
+            return VerifyTokenAsync(userAccountId, featureType, tokenRequestId, tokenValue, false).GetAwaiter().GetResult();
         }
 
-        private async Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue, bool runAsAsync)
+        private async Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, Guid tokenRequestId, string tokenValue, bool runAsAsync)
         {
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
@@ -33,20 +33,20 @@ namespace Factors.Database.OrmLite
                 var query = db.From<FactorsCredentialGeneratedToken>()
                     .Where(cred => 
                         cred.UserAccountId == userAccountId
+                        && cred.TokenRequestId == tokenRequestId
                         && cred.FeatureTypeGuid == featureType.FeatureGuid
                         && cred.ExpirationDateUtc >= currentDateUtc
                     );
 
-                var queryResult = runAsAsync
-                    ? await db.SelectAsync(query).ConfigureAwait(false)
-                    : db.Select(query);
+                var tokenResult = runAsAsync
+                    ? await db.SingleAsync(query).ConfigureAwait(false)
+                    : db.Single(query);
 
                 //
                 // If it isn't found (because expired, no hash matches,
                 // or just doesn't exist), return to user
                 //
-                var matchingResults = queryResult.Where(qr => _encryption.VerifyHash(tokenValue, qr.VerificationToken));
-                if (!matchingResults.Any())
+                if (tokenResult == null || !_encryption.VerifyHash(tokenValue, tokenResult.VerificationToken))
                 {
                     return new FactorsCredentialCreationVerificationResult
                     {
@@ -59,14 +59,13 @@ namespace Factors.Database.OrmLite
                 // If we made it this far, everything matches. We'll now
                 // delete the verification record since it's not needed anymore
                 //
-                var matchingIds = matchingResults.Select(mr => mr.Id);
                 if (runAsAsync)
                 {
-                    await db.DeleteByIdsAsync<FactorsCredentialGeneratedToken>(matchingIds).ConfigureAwait(false);
+                    await db.DeleteByIdAsync<FactorsCredentialGeneratedToken>(tokenResult.Id).ConfigureAwait(false);
                 }
                 else
                 {
-                    db.DeleteByIds<FactorsCredentialGeneratedToken>(matchingIds);
+                    db.DeleteById<FactorsCredentialGeneratedToken>(tokenResult.Id);
                 }
 
                 //
@@ -74,24 +73,26 @@ namespace Factors.Database.OrmLite
                 // that is currently marked as "unverified" and change that flag
                 // to "verified"
                 //
-                var matchingKeys = matchingResults.Select(mr => mr.CredentialKey);
                 var userCredentialQuery = db.From<FactorsCredential>()
                     .Where(cred => cred.UserAccountId == userAccountId
-                    && matchingKeys.Contains(cred.CredentialKey)
+                    && cred.CredentialKey == tokenResult.CredentialKey
                     && cred.CredentialIsValidated == false);
 
-                var userCredentials = runAsAsync
-                    ? await db.SelectAsync(userCredentialQuery).ConfigureAwait(false)
-                    : db.Select(userCredentialQuery);
+                var userCredential = runAsAsync
+                    ? await db.SingleAsync(userCredentialQuery).ConfigureAwait(false)
+                    : db.Single(userCredentialQuery);
 
-                userCredentials.ForEach(uc => uc.CredentialIsValidated = true);
-                if (runAsAsync)
+                if (userCredential != null)
                 {
-                    await db.UpdateAllAsync(userCredentials);
-                }
-                else
-                {
-                    db.UpdateAll(userCredentials);
+                    userCredential.CredentialIsValidated = true;
+                    if (runAsAsync)
+                    {
+                        await db.UpdateAsync(userCredential);
+                    }
+                    else
+                    {
+                        db.Update(userCredential);
+                    }
                 }
 
                 //
@@ -132,6 +133,30 @@ namespace Factors.Database.OrmLite
 
             using (var db = (runAsAsync ? await _dbConnection.OpenAsync().ConfigureAwait(false) : _dbConnection.Open()))
             {
+                //
+                // Generates a new token request id and ensures that
+                // no other duplcates exist in the database for this user.
+                // If there are duplicates, then regenerate the id and try again.
+                //
+                while (model.TokenRequestId == default(Guid))
+                {
+                    var guidCheck = Guid.NewGuid();
+
+                    var guidCheckQuery = db.From<FactorsCredentialGeneratedToken>()
+                        .Where(f => f.UserAccountId == model.UserAccountId
+                        && f.FeatureTypeGuid == model.FeatureTypeGuid
+                        && f.TokenRequestId == guidCheck);
+
+                    var guidExists = runAsAsync
+                        ? await db.ExistsAsync(guidCheckQuery).ConfigureAwait(false)
+                        : db.Exists(guidCheckQuery);
+
+                    if (!guidExists)
+                    {
+                        model.TokenRequestId = guidCheck;
+                    }
+                }
+
                 var tokenId = runAsAsync
                     ? await db.InsertAsync(model).ConfigureAwait(false)
                     : db.Insert(model);

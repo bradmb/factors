@@ -2,6 +2,7 @@
 using System.Linq;
 using Factors.Feature.Email;
 using Factors.Feature.Email.Models;
+using Factors.Models.UserAccount;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceStack.OrmLite;
 
@@ -71,16 +72,61 @@ namespace Factors.Tests
         public void VerifyEmailToken()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenRequestId.Value, emailCredential.TokenDetails.VerificationToken);
 
             Assert.IsTrue(verificationResult.Success);
+        }
+
+        [TestMethod]
+        public void VerifyTokenWorksMultipleTimes()
+        {
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenRequestId.Value, emailCredential.TokenDetails.VerificationToken);
+
+            Assert.IsTrue(verificationResult.Success);
+
+            var tokenRequest = Factors.ForUser(_userAccount).BeginTokenRequest<EmailFeatureType>(_userEmailAddress);
+            var tokenResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(tokenRequest.TokenRequestId.Value, tokenRequest.TokenDetails.VerificationToken);
+
+            Assert.IsTrue(tokenResult.Success);
+        }
+
+        [TestMethod]
+        public void VerifyTokenWorksWithMultiplePendingRequests()
+        {
+            var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenRequestId.Value, emailCredential.TokenDetails.VerificationToken);
+
+            Assert.IsTrue(verificationResult.Success);
+
+            var totalCredentialsCreated = 0;
+            var tokenRequestPos = new Random().Next(25, 75);
+            FactorsTokenRequestResult tokenRequest = null;
+            
+            while (totalCredentialsCreated < 100 || tokenRequest == null)
+            {
+                totalCredentialsCreated++;
+
+                if (totalCredentialsCreated == tokenRequestPos)
+                {
+                    tokenRequest = Factors.ForUser(_userAccount).BeginTokenRequest<EmailFeatureType>(_userEmailAddress);
+                } else
+                {
+                    Factors.ForUser(_userAccount).BeginTokenRequest<EmailFeatureType>(_userEmailAddress);
+
+                }
+            }
+
+            var tokenResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(tokenRequest.TokenRequestId.Value, tokenRequest.TokenDetails.VerificationToken);
+
+            Assert.IsTrue(tokenResult.Success);
         }
 
         [TestMethod]
         public void VerifyEmailAccountIsValidated()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(emailCredential.TokenDetails.VerificationToken);
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenRequestId.Value, emailCredential.TokenDetails.VerificationToken);
 
             var accounts = Factors.ForUser(_userAccount).ListVerifiedAccounts<EmailFeatureType>();
 
@@ -100,7 +146,7 @@ namespace Factors.Tests
         public void TryAndPassInvalidNewAccountValidationCode()
         {
             var emailCredential = Factors.ForUser(_userAccount).CreateCredential<EmailFeatureType>(_userEmailAddress);
-            var verificationResult = Factors.ForUser(_userAccount).VerifyCredentialRegistration<EmailFeatureType>(Guid.NewGuid().ToString().Substring(0, 6));
+            var verificationResult = Factors.ForUser(_userAccount).VerifyToken<EmailFeatureType>(emailCredential.TokenRequestId.Value, Guid.NewGuid().ToString().Substring(0, 6));
 
             Assert.IsFalse(verificationResult.Success);
         }

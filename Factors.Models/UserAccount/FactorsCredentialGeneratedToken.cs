@@ -7,7 +7,12 @@ namespace Factors.Models.UserAccount
     public class FactorsCredentialGeneratedToken
     {
         [PrimaryKey]
+        [AutoIncrement]
         public long Id { get; set; }
+
+        [Index]
+        [Unique]
+        public Guid TokenRequestId { get; set; }
 
         [Index]
         public string UserAccountId { get; set; }

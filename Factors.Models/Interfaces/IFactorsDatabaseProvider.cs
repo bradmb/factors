@@ -1,4 +1,5 @@
 ﻿using Factors.Models.UserAccount;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
+        FactorsCredentialCreationVerificationResult VerifyToken(string userAccountId, IFactorsFeatureType featureType, Guid tokenRequestId, string tokenValue);
 
         /// <summary>
         /// Verifies that the token passed for the specified user is correct,
@@ -44,7 +45,7 @@ namespace Factors.Models.Interfaces
         /// <param name="credentialType"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, string tokenValue);
+        Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync(string userAccountId, IFactorsFeatureType featureType, Guid tokenRequestId, string tokenValue);
 
         /// <summary>
         /// Stores a two-factor token in the database. Tokens are used

@@ -23,7 +23,7 @@ namespace Factors
         }
 
         /// <summary>
-        /// Creates a new email credential in the database and sends out
+        /// Creates a new credential in the database and sends out
         /// an email with a verification token which will be used to verify
         /// the email address is legitimate
         /// </summary>
@@ -36,6 +36,36 @@ namespace Factors
             var feature = this.Features[featureType.FeatureGuid];
 
             return feature.CreateCredential(this, credentialKey);
+        }
+
+        /// <summary>
+        /// Starts the token request process for a feature. Each feature may handle this operation
+        /// differently (ex: one may send out a message, another may simply await verification)
+        /// </summary>
+        /// <typeparam name="tt"></typeparam>
+        /// <param name="credentialKey"></param>
+        /// <returns></returns>
+        public FactorsTokenRequestResult BeginTokenRequest<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        {
+            var featureType = new tt();
+            var feature = this.Features[featureType.FeatureGuid];
+
+            return feature.BeginTokenRequest(this, credentialKey);
+        }
+
+        /// <summary>
+        /// Starts the token request process for a feature. Each feature may handle this operation
+        /// differently (ex: one may send out a message, another may simply await verification)
+        /// </summary>
+        /// <typeparam name="tt"></typeparam>
+        /// <param name="credentialKey"></param>
+        /// <returns></returns>
+        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        {
+            var featureType = new tt();
+            var feature = this.Features[featureType.FeatureGuid];
+
+            return feature.BeginTokenRequestAsync(this, credentialKey);
         }
     }
 }

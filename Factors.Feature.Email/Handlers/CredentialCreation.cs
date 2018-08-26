@@ -80,8 +80,8 @@ namespace Factors.Feature.Email
             }
 
             var sendTokenResult = runAsAsync
-                ? await this.SendCredentialValidationAsync(instance, credentialKey).ConfigureAwait(false)
-                : this.SendCredentialValidation(instance, credentialKey);
+                ? await this.BeginTokenRequestAsync(instance, credentialKey).ConfigureAwait(false)
+                : this.BeginTokenRequest(instance, credentialKey);
 
             if (!sendTokenResult.IsSuccess)
             {

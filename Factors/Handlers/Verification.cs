@@ -1,5 +1,6 @@
 ﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
+using System;
 using System.Threading.Tasks;
 
 namespace Factors
@@ -12,12 +13,13 @@ namespace Factors
         /// (assuming the token is correct)
         /// </summary>
         /// <param name="feature"></param>
+        /// <param name="tokenRequestId"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public FactorsCredentialCreationVerificationResult VerifyCredentialRegistration<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
+        public FactorsCredentialCreationVerificationResult VerifyToken<tt>(Guid tokenRequestId, string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.VerifyToken(UserAccount, featureType, tokenValue);
+            return Configuration.StorageDatabase.VerifyToken(UserAccount, featureType, tokenRequestId, tokenValue);
         }
 
         /// <summary>
@@ -26,12 +28,13 @@ namespace Factors
         /// (assuming the token is correct)
         /// </summary>
         /// <param name="feature"></param>
+        /// <param name="tokenRequestId"></param>
         /// <param name="tokenValue"></param>
         /// <returns></returns>
-        public Task<FactorsCredentialCreationVerificationResult> VerifyCredentialRegistrationAsync<tt>(string tokenValue) where tt : IFactorsFeatureType, new()
+        public Task<FactorsCredentialCreationVerificationResult> VerifyTokenAsync<tt>(Guid tokenRequestId, string tokenValue) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
-            return Configuration.StorageDatabase.VerifyTokenAsync(UserAccount, featureType, tokenValue);
+            return Configuration.StorageDatabase.VerifyTokenAsync(UserAccount, featureType, tokenRequestId, tokenValue);
         }
     }
 }
