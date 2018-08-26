@@ -21,6 +21,7 @@ namespace Factors.Tests
         {
             Factors.Initalize(new Models.FactorsConfiguration
             {
+                ApplicationName = "Factors Unit Test",
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.PlainText.Provider(),
                 TokenProvider = new Token.Alphabet.Provider(),

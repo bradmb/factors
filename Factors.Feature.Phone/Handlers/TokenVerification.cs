@@ -1,24 +1,25 @@
 ﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Factors.Feature.Email
+namespace Factors.Feature.Phone
 {
-    public partial class EmailProvider : IFactorsFeatureProvider
+    public partial class PhoneProvider : IFactorsFeatureProvider
     {
-        public FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey)
+        public FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
             return this.BeginTokenRequestAsync(instance, credentialKey, false).GetAwaiter().GetResult();
         }
 
-        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey)
+        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters)
         {
             return this.BeginTokenRequestAsync(instance, credentialKey, true);
         }
 
-        private async Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync)
+        private async Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, bool runAsAsync, params KeyValuePair<string, string>[] parameters)
         {
             //
             // Sets up our return model on the event of a successful
@@ -29,6 +30,21 @@ namespace Factors.Feature.Email
                 IsSuccess = true,
                 Message = "Validation token sent to credential",
             };
+
+            //
+            // Check to see if this request is for sending out a message
+            // by phone call. If it is, validate phone call handling is configured
+            // and abort if it's not configured
+            //
+            var sendAsPhoneCall = parameters?.Any(p => p.Key == "phonecall" && p.Value == "true") == true;
+            if (sendAsPhoneCall && (!_configuration.EnablePhoneCallSupport || _configuration.PhoneCallInboundEndpoint == null))
+            {
+                return new FactorsTokenRequestResult
+                {
+                    IsSuccess = false,
+                    Message = "Phone call support is currently not enabled, please enable first before attempting to use"
+                };
+            }
 
             //
             // Make sure we have a matching credential in the database, even
@@ -69,11 +85,18 @@ namespace Factors.Feature.Email
                 : instance.Configuration.StorageDatabase.StoreToken(tokenDetails);
 
             //
-            // Send out the verification token to the user's email address
+            // Generate the outbound message text
+            //
+            var messageText = _configuration.TextMessageTemplate
+                .Replace("@APPNAME", instance.Configuration.ApplicationName)
+                .Replace("@APPCODE@", newToken);
+
+            //
+            // Send out the verification token to the user's phone number
             //
             var messageSendResult = runAsAsync
-                ? await SendTokenMessageAsync(credentialKey, newToken).ConfigureAwait(false)
-                : SendTokenMessage(credentialKey, newToken);
+                ? await SendTokenMessageAsync(credentialKey, messageText, sendAsPhoneCall).ConfigureAwait(false)
+                : SendTokenMessage(credentialKey, messageText, sendAsPhoneCall);
 
             if (!messageSendResult.IsSuccess)
             {
