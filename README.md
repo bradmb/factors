@@ -145,7 +145,7 @@ To verify the token, simply follow the same steps previously covered for `Factor
 
 You will find most features are going to follow this exact same process, so any feature that does so will simply refer back to this section of the document on how to create/verify tokens and credentials
 
-### Phone Feature
+## Phone Feature
 This allows you to send out your tokens via text message (SMS) or voice call, and currently supports Twilio out of the box.
 
 To initialize this feature, simply chain it's method at the end of the `Factors.Initalize` call, like so:
