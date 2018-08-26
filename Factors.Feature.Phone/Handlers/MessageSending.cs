@@ -1,42 +1,36 @@
 ﻿using Factors.Feature.Phone.Models;
 using Factors.Models.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace Factors.Feature.Phone
 {
     public partial class PhoneProvider : IFactorsFeatureProvider
     {
-        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, bool sendAsPhoneCall)
+        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall)
         {
-            return SendTokenMessageAsync(phoneNumber, tokenMessage, sendAsPhoneCall, false).GetAwaiter().GetResult();
+            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, false).GetAwaiter().GetResult();
         }
 
-        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, bool sendAsPhoneCall)
+        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall)
         {
-            return SendTokenMessageAsync(phoneNumber, tokenMessage, sendAsPhoneCall, true);
+            return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, true);
         }
 
-        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, bool sendAsPhoneCall, bool runAsAsync)
+        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall, bool runAsAsync)
         {
-            if (sendAsPhoneCall && runAsAsync)
+            if (sendAsPhoneCall)
             {
-                return await _configuration.MessagingProvider.SendPhoneCallAsync(phoneNumber, _configuration.PhoneCallInboundEndpoint);
-            }
-            else if (sendAsPhoneCall)
-            {
-                return _configuration.MessagingProvider.SendPhoneCall(phoneNumber, _configuration.PhoneCallInboundEndpoint);
+                var phoneEndpoint = new Uri($"{_configuration.PhoneCallInboundEndpoint}?tokenId={tokenId}");
+
+                return runAsAsync
+                    ? await _configuration.MessagingProvider.SendPhoneCallAsync(phoneNumber, phoneEndpoint).ConfigureAwait(false)
+                    : _configuration.MessagingProvider.SendPhoneCall(phoneNumber, phoneEndpoint);
             }
 
-            if (!sendAsPhoneCall && runAsAsync)
-            {
-                return await _configuration.MessagingProvider.SendTextMessageAsync(phoneNumber, tokenMessage);
-            }
-            else if (!sendAsPhoneCall)
-            {
-                return _configuration.MessagingProvider.SendTextMessage(phoneNumber, tokenMessage);
-            }
-
-            return null;
+            return runAsAsync
+                ? await _configuration.MessagingProvider.SendTextMessageAsync(phoneNumber, tokenMessage).ConfigureAwait(false)
+                : _configuration.MessagingProvider.SendTextMessage(phoneNumber, tokenMessage);
         }
     }
 }
