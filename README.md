@@ -177,4 +177,11 @@ This is the external messaging provider that your text messages (SMS) or voice c
 #### TokenExpirationTime
 This is how long the generated token will be valid for. You won't want the tokens to be valid forever, so they will expire after a certain length of time (determined by your entry in this field). Five minutes is usually enough time for a user to receive and enter their token, so it's the suggested minimum value.
 
+### Adding Or Verifying A Phone Credential
+To understand how the methods work, please refer to the documentation in the email feature that covers how to add/validate the email credential and tokens. The subtle differences you need to know are:
+
+1. The phone feature uses `PhoneFeatureType` for feature identification. So if you're using the email example above as your starting point, replace `<EmailFeatureType>` with `<PhoneFeatureType>` to use this feature.
+
+2. This should be pretty obvious, but any place in the email example where it shows the `"name@domain.tld"` email address example should be replaced with the user's phone number that you'll be sending a text message (SMS) or voice call to.
+
 *Pull requests and issue reports always appreciated*
