@@ -25,8 +25,8 @@ namespace Factors
 
         /// <summary>
         /// Creates a new credential in the database and sends out
-        /// an email with a verification token which will be used to verify
-        /// the email address is legitimate
+        /// a message with a verification token which will be used to verify
+        /// the credential is legitimate
         /// </summary>
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>

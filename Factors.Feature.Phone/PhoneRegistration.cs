@@ -7,12 +7,12 @@ namespace Factors.Feature.Phone
         private static PhoneProvider Instance;
 
         /// <summary>
-        /// Registered the Email Two-Factor registration service with Factors
+        /// Registered the Phone Two-Factor registration service with Factors
         /// </summary>
         /// <param name="registration"></param>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public static FactorsRegistration UseEmailFactor(this FactorsRegistration registration, PhoneConfiguration configuration)
+        public static FactorsRegistration UsePhoneFactor(this FactorsRegistration registration, PhoneConfiguration configuration)
         {
             Instance = new PhoneProvider(configuration);
 

@@ -88,7 +88,7 @@ namespace Factors.Feature.Phone
             // Generate the outbound message text
             //
             var messageText = _configuration.TextMessageTemplate
-                .Replace("@APPNAME", instance.Configuration.ApplicationName)
+                .Replace("@APPNAME@", instance.Configuration.ApplicationName)
                 .Replace("@APPCODE@", newToken);
 
             //

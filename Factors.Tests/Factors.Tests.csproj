@@ -32,6 +32,9 @@
     <ProjectReference Include="..\Factors.Feature.Email.Postmark\Factors.Feature.Email.Postmark.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email.Smtp\Factors.Feature.Email.Smtp.csproj" />
     <ProjectReference Include="..\Factors.Feature.Email\Factors.Feature.Email.csproj" />
+    <ProjectReference Include="..\Factors.Feature.Phone.NullRoute\Factors.Feature.Phone.NullRoute.csproj" />
+    <ProjectReference Include="..\Factors.Feature.Phone.Twilio\Factors.Feature.Phone.Twilio.csproj" />
+    <ProjectReference Include="..\Factors.Feature.Phone\Factors.Feature.Phone.csproj" />
     <ProjectReference Include="..\Factors.Models\Factors.Models.csproj" />
     <ProjectReference Include="..\Factors.Token.Alphabet\Factors.Token.Alphabet.csproj" />
     <ProjectReference Include="..\Factors.Token.Alphanumeric\Factors.Token.Alphanumeric.csproj" />

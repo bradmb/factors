@@ -16,6 +16,21 @@ namespace Factors.Feature.Phone.Twilio
 
         public PhoneTwilioProvider(string accountSid, string authToken, string phoneNumber)
         {
+            if (String.IsNullOrWhiteSpace(accountSid))
+            {
+                throw new ArgumentException("PhoneFactor Twilio: accountSid must be configured at initialization");
+            }
+
+            if (String.IsNullOrWhiteSpace(authToken))
+            {
+                throw new ArgumentException("PhoneFactor Twilio: authToken must be configured at initialization");
+            }
+
+            if (String.IsNullOrWhiteSpace(phoneNumber))
+            {
+                throw new ArgumentException("PhoneFactor Twilio: phoneNumber must be configured at initialization");
+            }
+
             _sid = accountSid;
             _token = authToken;
             _phoneNumber = new PhoneNumber(phoneNumber);
