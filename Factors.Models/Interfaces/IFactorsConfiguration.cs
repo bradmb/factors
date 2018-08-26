@@ -3,6 +3,11 @@
     public interface IFactorsConfiguration
     {
         /// <summary>
+        /// The name of the application using Factors
+        /// </summary>
+        string ApplicationName { get; set; }
+
+        /// <summary>
         /// The database to use for storage of user factors data
         /// </summary>
         IFactorsDatabaseProvider StorageDatabase { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Factors.Models.Interfaces;
 using Factors.Models.UserAccount;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Factors
@@ -14,28 +15,28 @@ namespace Factors
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorsCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        public Task<FactorsCredentialCreationResult> CreateCredentialAsync<tt>(string credentialKey, params KeyValuePair<string, string>[] parameters) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
 
-            return feature.CreateCredentialAsync(this, credentialKey);
+            return feature.CreateCredentialAsync(this, credentialKey, parameters);
         }
 
         /// <summary>
         /// Creates a new credential in the database and sends out
-        /// an email with a verification token which will be used to verify
-        /// the email address is legitimate
+        /// a message with a verification token which will be used to verify
+        /// the credential is legitimate
         /// </summary>
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorsCredentialCreationResult CreateCredential<tt>(string credentialKey) where tt : IFactorsFeatureType, new ()
+        public FactorsCredentialCreationResult CreateCredential<tt>(string credentialKey, params KeyValuePair<string, string>[] parameters) where tt : IFactorsFeatureType, new ()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
 
-            return feature.CreateCredential(this, credentialKey);
+            return feature.CreateCredential(this, credentialKey, parameters);
         }
 
         /// <summary>
@@ -45,12 +46,12 @@ namespace Factors
         /// <typeparam name="tt"></typeparam>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public FactorsTokenRequestResult BeginTokenRequest<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        public FactorsTokenRequestResult BeginTokenRequest<tt>(string credentialKey, params KeyValuePair<string, string>[] parameters) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
 
-            return feature.BeginTokenRequest(this, credentialKey);
+            return feature.BeginTokenRequest(this, credentialKey, parameters);
         }
 
         /// <summary>
@@ -60,12 +61,12 @@ namespace Factors
         /// <typeparam name="tt"></typeparam>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync<tt>(string credentialKey) where tt : IFactorsFeatureType, new()
+        public Task<FactorsTokenRequestResult> BeginTokenRequestAsync<tt>(string credentialKey, params KeyValuePair<string, string>[] parameters) where tt : IFactorsFeatureType, new()
         {
             var featureType = new tt();
             var feature = this.Features[featureType.FeatureGuid];
 
-            return feature.BeginTokenRequestAsync(this, credentialKey);
+            return feature.BeginTokenRequestAsync(this, credentialKey, parameters);
         }
     }
 }

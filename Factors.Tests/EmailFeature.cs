@@ -28,6 +28,7 @@ namespace Factors.Tests
         {
             Factors.Initalize(new Models.FactorsConfiguration
             {
+                ApplicationName = "Factors Unit Test",
                 StorageDatabase = new Database.OrmLite.Provider(":memory:", SqliteDialect.Provider),
                 EncryptionProvider = new Encryption.BCryptStandard.Provider(),
                 TokenProvider = new Token.Number.Provider()

@@ -1,4 +1,5 @@
 ﻿using Factors.Models.UserAccount;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Factors.Models.Interfaces
@@ -12,7 +13,7 @@ namespace Factors.Models.Interfaces
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey);
+        FactorsCredentialCreationResult CreateCredential(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters);
 
         /// <summary>
         /// Creates a new user credential in the database. Will also kick off the <c>BeginTokenRequest</c>
@@ -21,7 +22,7 @@ namespace Factors.Models.Interfaces
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey);
+        Task<FactorsCredentialCreationResult> CreateCredentialAsync(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters);
 
         /// <summary>
         /// Starts the token request process for a feature. Each feature may handle this operation
@@ -30,7 +31,7 @@ namespace Factors.Models.Interfaces
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey);
+        FactorsTokenRequestResult BeginTokenRequest(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters);
 
         /// <summary>
         /// Starts the token request process for a feature. Each feature may handle this operation
@@ -39,6 +40,6 @@ namespace Factors.Models.Interfaces
         /// <param name="instance"></param>
         /// <param name="credentialKey"></param>
         /// <returns></returns>
-        Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey);
+        Task<FactorsTokenRequestResult> BeginTokenRequestAsync(IFactorsApplication instance, string credentialKey, params KeyValuePair<string, string>[] parameters);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Factors.Feature.Email.Interfaces;
 using Factors.Feature.Email.Models;
+using System;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -12,7 +13,8 @@ namespace Factors.Feature.Email.NullRoute
             return new EmailSendResult
             {
                 IsSuccess = true,
-                Message = "Null route, no message was sent."
+                Message = "Message discarded, I am a null route",
+                TrackingIdentifier = Guid.NewGuid().ToString()
             };
         }
 
@@ -23,7 +25,8 @@ namespace Factors.Feature.Email.NullRoute
                 return new EmailSendResult
                 {
                     IsSuccess = true,
-                    Message = "Null route, no message was sent."
+                    Message = "Message discarded, I am a null route",
+                    TrackingIdentifier = Guid.NewGuid().ToString()
                 };
             });
         }
