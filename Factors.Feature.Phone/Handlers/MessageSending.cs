@@ -7,17 +7,17 @@ namespace Factors.Feature.Phone
 {
     public partial class PhoneProvider : IFactorsFeatureProvider
     {
-        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall)
+        private MessageSendResult SendTokenMessage(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall)
         {
             return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, false).GetAwaiter().GetResult();
         }
 
-        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall)
+        private Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall)
         {
             return SendTokenMessageAsync(phoneNumber, tokenMessage, tokenId, sendAsPhoneCall, true);
         }
 
-        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, string tokenId, bool sendAsPhoneCall, bool runAsAsync)
+        private async Task<MessageSendResult> SendTokenMessageAsync(string phoneNumber, string tokenMessage, Guid tokenId, bool sendAsPhoneCall, bool runAsAsync)
         {
             if (sendAsPhoneCall)
             {

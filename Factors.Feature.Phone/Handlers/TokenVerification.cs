@@ -95,8 +95,15 @@ namespace Factors.Feature.Phone
             // Send out the verification token to the user's phone number
             //
             var messageSendResult = runAsAsync
-                ? await SendTokenMessageAsync(credentialKey, messageText, sendAsPhoneCall).ConfigureAwait(false)
-                : SendTokenMessage(credentialKey, messageText, sendAsPhoneCall);
+                ? await SendTokenMessageAsync(credentialKey, 
+                    messageText, 
+                    credentialResult.TokenRequestId.Value, 
+                    sendAsPhoneCall).ConfigureAwait(false)
+
+                : SendTokenMessage(credentialKey,
+                    messageText,
+                    credentialResult.TokenRequestId.Value,
+                    sendAsPhoneCall);
 
             if (!messageSendResult.IsSuccess)
             {
