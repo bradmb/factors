@@ -10,12 +10,9 @@ namespace Factors.Feature.Email.Smtp
     {
         private readonly SmtpClient _client;
         
-        public EmailSmtpProvider(string host, int port, bool useSSL)
+        public EmailSmtpProvider(SmtpClient smtpClient)
         {
-            _client = new SmtpClient(host, port)
-            {
-                EnableSsl = useSSL
-            };
+            _client = smtpClient;
         }
 
         public EmailSendResult Send(MailMessage message)

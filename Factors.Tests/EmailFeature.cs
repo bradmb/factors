@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Mail;
 using Factors.Feature.Email;
 using Factors.Feature.Email.Models;
 using Factors.Models.UserAccount;
@@ -16,8 +17,9 @@ namespace Factors.Tests
         private readonly string _senderAddress = "factors@domain.tld";
         private readonly string _senderName = "Factors";
 #if DEBUGSMTP
-        private readonly string _smtpHost = "localhost";
-        private readonly int _smtpPort = 25;
+        private static readonly string _smtpHost = "localhost";
+        private static readonly int _smtpPort = 25;
+        private readonly SmtpClient _smtpClient = new SmtpClient(_smtpHost, _smtpPort);
 #elif DEBUGPOSTMARK
         private readonly string _postmarkServerToken = "";
 #endif
@@ -39,7 +41,7 @@ namespace Factors.Tests
 #if DEBUGPOSTMARK
                 MailProvider = new Feature.Email.Postmark.EmailPostmarkProvider(_postmarkServerToken),
 #elif DEBUGSMTP
-                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpClient),
 #elif !DEBUG
                 MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
@@ -176,7 +178,7 @@ namespace Factors.Tests
             {
                 FromName = _senderName,
 #if DEBUGSMTP
-                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpClient),
 #elif !DEBUG
                 MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
@@ -199,7 +201,7 @@ namespace Factors.Tests
             {
                 FromAddress = _senderAddress,
 #if DEBUGSMTP
-                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpClient),
 #elif !DEBUG
                 MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
@@ -241,7 +243,7 @@ namespace Factors.Tests
             {
                 FromAddress = _senderAddress,
 #if DEBUGSMTP
-                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false)
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpClient)
 #elif !DEBUG
                 MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider()
 #endif
@@ -264,7 +266,7 @@ namespace Factors.Tests
                 FromAddress = _senderAddress,
                 FromName = _senderName,
 #if DEBUGSMTP
-                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpHost, _smtpPort, false),
+                MailProvider = new Feature.Email.Smtp.EmailSmtpProvider(_smtpClient),
 #elif !DEBUG
                 MailProvider = new Feature.Email.NullRoute.EmailNullRouteProvider(),
 #endif
