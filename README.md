@@ -104,7 +104,7 @@ var emailCredential = Factors.ForUser("my-user-account-name").CreateCredential<E
 
 Now, let's go over each piece here and explain it in more detail.
 
-First, we have `Factors.ForUser("my-user-account-nane")`. Factors keeps track of your users and all of the credentials associated with them, so you will pass a unique id associated with that user (their email address, database id, etc) in the `ForUser()` method so Factors knows who we're managing credentials for.
+First, we have `Factors.ForUser("my-user-account-name")`. Factors keeps track of your users and all of the credentials associated with them, so you will pass a unique id associated with that user (their email address, database id, etc) in the `ForUser()` method so Factors knows who we're managing credentials for.
 
 Next, we have `.CreateCredential<EmailFeatureType>`. This tells Factor what feature we're wanting to interact with. Every feature has it's own type object, and Factors uses this to not only interact with that feature, but also ensure that the data we are storing in the database is associated with the feature we're using.
 
