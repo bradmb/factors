@@ -1,6 +1,7 @@
 # Factors
 [![Build Status](https://travis-ci.org/bradmb/factors.svg?branch=master)](https://travis-ci.org/bradmb/factors)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbradmb%2Ffactors.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbradmb%2Ffactors?ref=badge_shield)
+[![CodeFactor](https://www.codefactor.io/repository/github/bradmb/factors/badge)](https://www.codefactor.io/repository/github/bradmb/factors)
 
 *NETStandard 2.0 library that makes it easy to implement multi-factor (and FIDO2) authentication into your application*
 
