@@ -23,6 +23,13 @@ To-do:
 
 ----------
 
+# Table of Contents
+1. [How It Works](#how-it-works)
+2. [Enabling A Feature](#enabling-a-feature)
+3. [Email Feature](#email-feature)
+4. [Phone Feature](#phone-feature)
+5. [Using Multiple Features](#using-multiple-features)
+
 # How It Works
 
 Factors is a fully modular library, meaning you can use whatever components you want, or you can even write your own components to use on top of it (ex: using a different email provider's library).
