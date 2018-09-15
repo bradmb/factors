@@ -1,5 +1,6 @@
 # Factors
 [![Build Status](https://travis-ci.org/bradmb/factors.svg?branch=master)](https://travis-ci.org/bradmb/factors)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbradmb%2Ffactors.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbradmb%2Ffactors?ref=badge_shield)
 
 *NETStandard 2.0 library that makes it easy to implement multi-factor (and FIDO2) authentication into your application*
 
@@ -203,3 +204,7 @@ Factors.Initalize(new Models.FactorsConfiguration
 This will initalize each feature and allow you to use them all.
 
 *Pull requests and issue reports always appreciated*
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbradmb%2Ffactors.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbradmb%2Ffactors?ref=badge_large)
