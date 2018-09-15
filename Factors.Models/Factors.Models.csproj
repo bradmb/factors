@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ServiceStack.Interfaces.Core" Version="5.1.0" />
+    <PackageReference Include="ServiceStack.Interfaces.Core" Version="5.2.0" />
   </ItemGroup>
 
 </Project>
