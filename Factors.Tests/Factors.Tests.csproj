@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
     <PackageReference Include="ServiceStack.OrmLite.Core" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.OrmLite.Sqlite.Core" Version="5.4.0" />
+    <PackageReference Include="ServiceStack.OrmLite.Sqlite.Core" Version="5.8.0" />
   </ItemGroup>
 
   <ItemGroup>
